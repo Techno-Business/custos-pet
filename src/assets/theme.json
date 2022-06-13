@@ -1,0 +1,13 @@
+{
+    "colors": {
+        "dark": "#000000",
+        "brand": "#F0560A",
+        "primary": "#FFFFFF",
+        "secondary": "#E5E7EB",
+        "tertiary": "#1F2937",
+        "darkLight": "#9CA3AF",
+        "greenLight": "#10B981",
+        "redLight": "#EF4444",
+        "blueLight": "#0386D0"
+    }
+}
