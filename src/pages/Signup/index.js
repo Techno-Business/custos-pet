@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Alert } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,17 +28,26 @@ const Signup = () => {
             await SignupSchema.validate(userForm);
             dispatch(saveUser());
         } catch ({ errors }) {
-            Alert.alert(errors[0], 'correct the error before continuing');
+            Alert.alert(errors[0], 'Correct the error before continuing');
         }
     };
 
+    const firstNameInputRef = useRef();
+    const lastNameInputRef = useRef();
+    const emailInputRef = useRef();
+    const passwordInputRef = useRef();
+    const passwordConfirmInputRef = useRef();
+
     return (
         <KeyboardAvoidingWrapper>
-            <Box background="primary" hasPadding>
-                <Spacer size="90px"/>
+            <Box background="primary" hasPadding aling="center" justify="center">
+                <Spacer size="60px"/>
                 <Title medium>Account Signup</Title>
                 <Spacer size="30px"/>
-                <TextInput 
+                <TextInput ref={firstNameInputRef}
+                    onSubmitEditing={() => {
+                        lastNameInputRef.current.focus();
+                    }}
                     label="Firstname" 
                     placeholder="Brayan" 
                     left={<TextInput.Icon name="account" color="#F0560A"/>}
@@ -49,7 +58,10 @@ const Signup = () => {
                     }}
                 ></TextInput>
                 <Spacer size="15px"/>
-                <TextInput 
+                <TextInput ref={lastNameInputRef}
+                    onSubmitEditing={() => {
+                        emailInputRef.current.focus();
+                    }}
                     label="Lastname" 
                     placeholder="Uehara" 
                     left={<TextInput.Icon name="account" color="#F0560A"/>}
@@ -60,7 +72,10 @@ const Signup = () => {
                     }}
                 ></TextInput>
                 <Spacer size="15px"/>
-                <TextInput 
+                <TextInput ref={emailInputRef}
+                    onSubmitEditing={() => {
+                        passwordInputRef.current.focus();
+                    }}
                     label="Email" 
                     placeholder="example@gmail.com" 
                     left={<TextInput.Icon name="email" color="#F0560A"/>}
@@ -72,12 +87,16 @@ const Signup = () => {
                     }}
                 ></TextInput>
                 <Spacer size="15px"/>
-                <TextInput 
+                <TextInput ref={passwordInputRef}
+                    onSubmitEditing={() => {
+                        passwordConfirmInputRef.current.focus();
+                    }}
                     label="Password" 
                     placeholder="* * * * * * * * *" 
                     secureTextEntry={hidePassword}
                     left={<TextInput.Icon name="lock" color="#F0560A"/>}
-                    right={<TextInput.Icon name={hidePassword ? "eye-off" : 'eye'} color="#9CA3AF" onPress={() => setHidePassword(!hidePassword)}/>} 
+                    right={<TextInput.Icon name={hidePassword ? "eye-off" : 'eye'} color="#9CA3AF" 
+                        onPress={() => setHidePassword(!hidePassword)}/>} 
                     disabled={form?.saving}
                     value={userForm?.password}
                     onChangeText={(password) => {
@@ -85,12 +104,13 @@ const Signup = () => {
                     }}
                 ></TextInput>
                 <Spacer size="15px"/>
-                <TextInput 
+                <TextInput ref={passwordConfirmInputRef}
                     label="Confirm Password" 
                     placeholder="* * * * * * * * *" 
                     secureTextEntry={hidePassword}
                     left={<TextInput.Icon name="lock" color="#F0560A"/>}
-                    right={<TextInput.Icon name={hidePassword ? "eye-off" : 'eye'} color="#9CA3AF" onPress={() => setHidePassword(!hidePassword)}/>} 
+                    right={<TextInput.Icon name={hidePassword ? "eye-off" : 'eye'} color="#9CA3AF" 
+                        onPress={() => setHidePassword(!hidePassword)}/>} 
                     disabled={form?.saving}
                     value={userForm?.passwordConfirm}
                     onChangeText={(passwordConfirm) => {
@@ -98,16 +118,16 @@ const Signup = () => {
                     }}
                 ></TextInput>    
                 <Spacer size="40px"/>
-                <Button size={20}
+                <Button
                     disabled={form?.saving}
                     loading={form?.saving}
                     onPress={() => requestSignup()}>Signup
                 </Button>
                 <Spacer size="30px"/>
                 <ExtraView>
-                    <ExtraText>Already have an account? </ExtraText>
-                        <TextLink onPress={() => navigate('Login')}>
-                            <TextLinkContent medium>Login</TextLinkContent>
+                    <ExtraText width="auto">Already have an account? </ExtraText>
+                        <TextLink width="auto" onPress={() => navigate('Login')}>
+                            <TextLinkContent hasPadding medium>Login</TextLinkContent>
                         </TextLink>                    
                 </ExtraView>
             </Box>

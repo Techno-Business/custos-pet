@@ -1,11 +1,14 @@
 import types from './types';
+
 import produce from 'immer';
 
 const INITIAL_STATE = {
     userForm: {},
-    petForm: {},
+    petForm: {sex: 'Male'},
+    costForm: {type: 'Service'},
     user: {},
     pet: {},
+    cost: {},
     form: {
         disabled: false,
         loading: false,
@@ -32,7 +35,13 @@ function app(state = INITIAL_STATE, action) {
         draft.petForm = { ...state.petForm, ...action.payload };
       });
     }
-    
+
+    case types.SET_COST: {
+      return produce(state, (draft) => {
+        draft.costForm = { ...state.costForm, ...action.payload };
+      });
+    }
+
     case types.SET_FORM: {
       return produce(state, (draft) => {
         draft.form = { ...state.form, ...action.payload };

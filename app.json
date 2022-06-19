@@ -1,10 +1,15 @@
 {
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "Custos Pet",
+    "slug": "custos-pet",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
-  }
+    ],
+    "android": {
+      "package": "app.custospet.dev"
+    },
+    "description": ""
+  },
+  "name": "Custos Pet"
 }

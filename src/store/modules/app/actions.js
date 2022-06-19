@@ -31,6 +31,18 @@ export function setForm(payload) {
 export function getPet() {
   return { type: types.GET_PET };
 }
+
+export function setCost(payload) {
+  return { type: types.SET_COST, payload };
+}
+
+export function saveCost() {
+  return { type: types.SAVE_COST } ;
+}
+
+export function getCost() {
+  return { type: types.GET_COST };
+}
   
 export function reset(key) {
   return { type: types.RESET, key };

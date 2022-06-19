@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser as setUserAction, loginUser, setReducer, setForm } from './../../store/modules/app/actions';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { Box, Cover, Spacer, Title, Button, TextInput, ExtraView, ExtraText, TextLink, TextLinkContent, ActivityIndicator } 
-from '../../components';
+import { Box, Cover, Spacer, Title, Button, TextInput, ExtraView, ExtraText, 
+TextLink, TextLinkContent, ActivityIndicator } from '../../components';
 import logoCustoPet from './../../assets/logoCustosPET.png';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import LoginSchema from './../../schemas/login.schema';
 
@@ -18,7 +18,6 @@ import { navigate, replace } from './../../services/navigation';
 
 const Login = () => {
     const [hidePassword, setHidePassword] = useState(true);
-
     const [loggedState, setLoggedState] = useState(false);
 
     const dispatch = useDispatch();
@@ -29,7 +28,6 @@ const Login = () => {
     };
 
     const getLoggedState = async () => {
-        await AsyncStorage.clear();
         const user = await AsyncStorage.getItem('@user');
 
         if (user) {
@@ -49,16 +47,19 @@ const Login = () => {
             await LoginSchema.validate(userForm);
             dispatch(loginUser());
         } catch ({ errors }) {
-            Alert.alert(errors[0], 'correct the error before continuing');
+            Alert.alert(errors[0], 'Correct the error before continuing');
         }
     };
 
+    const emailInputRef = useRef();
+    const passwordInputRef = useRef();
+
     return (
         <KeyboardAvoidingWrapper>
-            <Box hasPadding background="primary">
+            <Box background="primary" hasPadding aling="center" justify="center">
                 <Spacer size="60px"/>
-                <Cover source={logoCustoPet} width="200px" height="140px" spacing="0px auto" transparent/>
-                <Spacer size="30px"/>
+                <Cover source={logoCustoPet} width="200px" height="140px" transparent/>
+                <Spacer size="20px"/>
 
                 {!loggedState && (
                     <>
@@ -69,9 +70,12 @@ const Login = () => {
 
                 {loggedState && (
                     <>
-                     <Title medium>Account Login</Title>
+                     <Title medium background="brand">Account Login</Title>
                         <Spacer size="30px"/>
-                        <TextInput 
+                        <TextInput ref={emailInputRef}
+                            onSubmitEditing={() => {
+                                passwordInputRef.current.focus();
+                            }}
                             label="Email" 
                             placeholder="example@gmail.com" 
                             left={<TextInput.Icon name="email" color="#F0560A"/>}
@@ -79,38 +83,39 @@ const Login = () => {
                             disabled={form?.loading}
                             value={userForm?.email}
                             onChangeText={(email) => {
-                            setUser({ email });
+                                setUser({ email });
                             }}
                         ></TextInput>
                         <Spacer size="15px"/>
-                        <TextInput 
+                        <TextInput ref={passwordInputRef}
                             label="Password" 
                             placeholder="* * * * * * * * *" 
                             secureTextEntry={hidePassword}
                             left={<TextInput.Icon name="lock" color="#F0560A"/>}
-                            right={<TextInput.Icon name={hidePassword ? "eye-off" : 'eye'} color="#9CA3AF" onPress={() => setHidePassword(!hidePassword)}/>} 
+                            right={<TextInput.Icon name={hidePassword ? "eye-off" : 'eye'} color="#9CA3AF" 
+                                onPress={() => setHidePassword(!hidePassword)}/>} 
                             disabled={form?.loading}
                             value={userForm?.password}
                             onChangeText={(password) => {
-                            setUser({ password });
-                        }}
+                                setUser({ password });
+                            }}
                         ></TextInput>
                         <Spacer/>
                         <TextLink>
-                            <TextLinkContent color="blueLight" small>Forget password?</TextLinkContent>
+                            <TextLinkContent hasPadding color="blueLight" small>Forget password?</TextLinkContent>
                         </TextLink>
                         <Spacer size="40px"/>
-                        <Button size={20}
+                        <Button
                             disabled={form?.saving}
                             loading={form?.saving}
                             onPress={() => sendLogin()}>Login
                         </Button>
                         <Spacer size="30px"/>
                         <ExtraView>
-                            <ExtraText>Don't have an account already? </ExtraText>
-                                <TextLink onPress={() => navigate('Signup')}>
-                                    <TextLinkContent medium>Signup</TextLinkContent>
-                                </TextLink>                    
+                            <ExtraText width="auto">Don't have an account already? </ExtraText>
+                            <TextLink width="auto" onPress={() => navigate('Signup')}>
+                                <TextLinkContent hasPadding medium>Signup</TextLinkContent>
+                            </TextLink>                    
                         </ExtraView>    
                     </>
                 )}

@@ -1,37 +1,31 @@
 import * as React from 'react';
+import { Image, FlatList, Dimensions, Animated, Text, View, 
+  StyleSheet, SafeAreaView } from 'react-native';
+import { FlingGestureHandler, Directions, State } 
+from 'react-native-gesture-handler';
 
-import { useSelector } from 'react-redux';
-
-import {
-    Image,
-    FlatList,
-    Dimensions,
-    Animated,
-    Text,
-    View,
-    StyleSheet,
-    SafeAreaView,
-} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCost as setCostAction, 
+  setForm } from './../../store/modules/app/actions';
 
 import { Button, Spacer } from './../../components';
 
 const { width } = Dimensions.get('screen');
 
-import {
-    FlingGestureHandler,
-    Directions,
-    State,
-} from 'react-native-gesture-handler';
-
 import util from '../../util';
+
+import { modalRef as modalRefCost } from './../modal/addCost';
+
+import { navigate } from '../../services/navigation';
 
 const OVERFLOW_HEIGHT = 70;
 const SPACING = 5;
-const ITEM_WIDTH = width * 0.8;
+const ITEM_WIDTH = width * 0.75;
 const ITEM_HEIGHT = ITEM_WIDTH * 1.2;
 const VISIBLE_ITEMS = 3;
 
 const OverflowItems = ({ data, scrollXAnimated }) => {
+  const dispatch = useDispatch();
   const inputRange = [-1, 0, 1];
   const translateY = scrollXAnimated.interpolate({
     inputRange,
@@ -41,6 +35,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
     <View style={styles.overflowContainer}>
       <Animated.View style={{ transform: [{ translateY }] }}>
         {data.map((item, index) => {
+          const petId = item._id;
           return (
             <View key={index} style={styles.itemContainer}>
               <Text style={[styles.name]} numberOfLines={1}>
@@ -48,14 +43,25 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
               </Text>
               <View style={styles.itemContainerRow}>
                 <Text style={[styles.species]}>
-                  {item.species}
+                  {item.species}, {item.breed}
                 </Text>
                 <Text style={[styles.age]}>{item.age}</Text>
               </View>
               <Spacer size="15px"/>
               <View style={styles.itemContainerRow}>
-                <Button width="40%" background="greenLight" size={16}>Add custo</Button>
-                <Button width="40%" background="blueLight" size={16}>History</Button>
+                <Button width="45%" background="greenLight" size={16}
+                  onPress={async () => { 
+                      await dispatch(setCostAction({petId}))
+                      modalRefCost?.current?.open()
+                    }
+                  }>Add cost</Button>
+                <Button width="45%" background="blueLight" size={16}
+                 onPress={async () => { 
+                      await dispatch(setCostAction({petId}))   
+                      dispatch(setForm({ loading: true }));
+                      navigate('HistoryCost');
+                  }
+                }>History</Button>
               </View>
             </View>
           );
@@ -66,9 +72,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
 };
 
 const FlatListAnimated = () => {
-
   const { pet } = useSelector((state) => state.app);
-
   const [data, setData] = React.useState(pet.pets);
 
   const scrollXIndex = React.useRef(new Animated.Value(0)).current;
@@ -99,9 +103,7 @@ const FlatListAnimated = () => {
       direction={Directions.LEFT}
       onHandlerStateChange={(ev) => {
         if (ev.nativeEvent.state === State.END) {
-          if (index === data.length - 1) {
-            return;
-          }
+          if (index === data.length - 1) return;
           setActiveIndex(index + 1);
         }
       }}
@@ -111,16 +113,13 @@ const FlatListAnimated = () => {
         direction={Directions.RIGHT}
         onHandlerStateChange={(ev) => {
           if (ev.nativeEvent.state === State.END) {
-            if (index === 0) {
-              return;
-            }
+            if (index === 0) return;
             setActiveIndex(index - 1);
           }
         }}
       >
         <SafeAreaView style={styles.container}>
-
-          <OverflowItems data={data} scrollXAnimated={scrollXAnimated} />
+          <OverflowItems data={data} scrollXAnimated={scrollXAnimated}/>
           <FlatList
             data={data}
             keyExtractor={(_, index) => String(index)}
@@ -130,7 +129,7 @@ const FlatListAnimated = () => {
               flex: 1,
               justifyContent: 'center',
               padding: SPACING * 2,
-              marginTop: 70,
+              marginTop: 20,
             }}
             scrollEnabled={false}
             removeClippedSubviews={false}
@@ -169,12 +168,7 @@ const FlatListAnimated = () => {
                     position: 'absolute',
                     left: -ITEM_WIDTH / 2,
                     opacity,
-                    transform: [
-                      {
-                        translateX,
-                      },
-                      { scale },
-                    ],
+                    transform: [{ translateX }, { scale }],
                   }}
                 >
                   <Image
@@ -227,4 +221,5 @@ const styles = StyleSheet.create({
       overflow: 'hidden',
     },
 });
+
 export default FlatListAnimated;

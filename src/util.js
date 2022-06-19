@@ -38,5 +38,5 @@ export default {
       const parts = name.split('.');
       return types[parts.pop().trim()];
     },
-  };
+};
   

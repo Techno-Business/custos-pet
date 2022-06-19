@@ -7,6 +7,9 @@ const types = {
     SAVE_PET: '@app/SAVE_PET',
     SET_FORM: '@app/SET_FORM',
     GET_PET: '@app/GET_PET',
+    SET_COST: '@app/SET_COST',
+    SAVE_COST: '@app/SAVE_COST',
+    GET_COST: '@app/GET_COST',
     RESET: '@app/RESET',
 };
 

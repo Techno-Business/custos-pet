@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, 
+    Keyboard } from 'react-native';
 
 import { colors } from './../../assets/theme.json';
 

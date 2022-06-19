@@ -6,6 +6,8 @@ import { getPet } from '../../store/modules/app/actions';
 import { Cover, Box, Title, Spacer, TextP, Button, ActivityIndicator } from './../../components';
 import illustration from './../../assets/illustration.jpg';
 
+import ModalAddCost from '../../components/modal/addCost';
+
 import FlatListAnimated from '../../components/FlatListAnimated';
 
 import { navigate } from './../../services/navigation';
@@ -15,45 +17,43 @@ const Home = () => {
     const { pet, form } = useSelector((state) => state.app);
 
     useEffect(() => {
-        dispatch(getPet());
+        dispatch(getPet());    
     }, []);
     
     return (
         <>
-            <Box hasPadding background="primary">
+            <ModalAddCost/>
+            <Box background="primary" hasPadding aling="center" justify="center">
                 {form?.loading && (
-                    <Box spacing="60px 0 0 0" hasPadding align="center">
-                        <ActivityIndicator size="large" />
-                        <Spacer size="20px" />
-                        <Title color="tertiary" small>Searching for information</Title>
+                    <Box hasPadding align="center" justify="center">
+                        <ActivityIndicator color="brand" size="large" />
+                        <Spacer size="40px"/>
+                        <Title color="tertiary" medium>Searching for information</Title>
                         <Spacer size="10px" />
-                        <TextP>Please wait a moment...</TextP>
+                        <TextP align="center">Please wait a moment...</TextP>
                     </Box>
                 )}
-
+                
                 {!pet?.pets && !form?.loading &&(
-                    <Box hasPadding>
-                        <Spacer size="160px"/>
-                        <Cover source={illustration} width="340px" height="200px" spacing="0px auto" transparent/>
+                    <Box hasPadding align="center" justify="center">
+                        <Cover source={illustration} width="300px" height="160px" transparent/>
                         <Spacer size="40px"/>
                         <Title big color="tertiary" small>No pet registered at the moment</Title>
                     </Box>
                 )}
 
                 {pet?.pets && !form?.loading && (
-                    <Box height="90%">
+                    <Box height="90%" justify="center" align="center">
                         <FlatListAnimated/>
                     </Box>
                 )}
 
                 {!form?.loading && (
-                    <Box hasPadding>
-                        <Button 
-                            disabled={form?.saving}
-                            loading={form?.saving}
-                            onPress={() => navigate('AddPet')}>Add new pet
-                        </Button>
-                    </Box>         
+                    <Button 
+                        disabled={form?.saving}
+                        loading={form?.saving}
+                        onPress={() => navigate('AddPet')}>Add new pet
+                    </Button>
                 )}
             </Box>     
         </>   
