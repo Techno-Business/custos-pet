@@ -18,6 +18,7 @@ import SignupScreen from './pages/Signup';
 import HomeScreen from './pages/Home';
 import AddPetScreen from './pages/AddPet';
 import HistoryCost from './pages/HistoryCost';
+import Maps from './pages/Maps';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -94,7 +95,12 @@ const Routes = () => {
                         options={{ headerShown: false }}
                         name="HistoryCost"
                         component={ HistoryCost }
-                    />                   
+                    />
+                    <Stack.Screen
+                        options={{ headerShown: false }}
+                        name="Maps"
+                        component={ Maps }
+                    />
                 </Stack.Navigator>
             </NavigationContainer>
         </>
