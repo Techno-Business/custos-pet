@@ -25,6 +25,7 @@ const HistoryCost = () => {
     
     return (
         <Box background="primary" hasPadding>
+            <Spacer size="10px"/>
             <Box row align="flex-end" height="10%">
                 <Button width="15%" spacing="0 40px 0 0" hasPadding="0 0 0 15px" icon="home" size={30}
                     onPress={() => navigate('Home')}></Button>

@@ -18,6 +18,7 @@ import SignupScreen from './pages/Signup';
 import HomeScreen from './pages/Home';
 import AddPetScreen from './pages/AddPet';
 import HistoryCost from './pages/HistoryCost';
+import MapsScreen from './pages/Maps';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -37,6 +38,12 @@ const TabNavigator = () => {
                 tabBarLabel: 'Home',
                 tabBarIcon: ({ color, size }) => (
                   <Icon name="home" color={color} size={size} />
+                ),
+            }}/>
+            <Tab.Screen name='MapsScreen' component={MapsScreen} options={{
+                tabBarLabel: 'Maps',
+                tabBarIcon: ({ color, size }) => (
+                  <Icon name="google-maps" color={color} size={size} />
                 ),
             }}/>
             <Tab.Screen name='Logout' component={LoginScreen} options={({route}) => ({
