@@ -3,13 +3,14 @@
     "name": "Custos Pet",
     "slug": "custos-pet",
     "version": "1.0.0",
+    "privacy": "public",
+    "description": "Aplicação para gerenciamento de gastos de pets",
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
       "package": "app.custospet.dev"
-    },
-    "description": ""
+    }
   },
   "name": "Custos Pet"
 }
