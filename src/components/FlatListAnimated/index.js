@@ -1,22 +1,35 @@
-import * as React from 'react';
-import { Image, FlatList, Dimensions, Animated, Text, View, 
-  StyleSheet, SafeAreaView } from 'react-native';
-import { FlingGestureHandler, Directions, State } 
-from 'react-native-gesture-handler';
+import * as React from "react";
+import {
+  Image,
+  FlatList,
+  Dimensions,
+  Animated,
+  Text,
+  View,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
+import {
+  FlingGestureHandler,
+  Directions,
+  State,
+} from "react-native-gesture-handler";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setCost as setCostAction,
+  setForm,
+} from "./../../store/modules/app/actions";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setCost as setCostAction, 
-  setForm } from './../../store/modules/app/actions';
+import { Button, Spacer } from "./../../components";
 
-import { Button, Spacer } from './../../components';
+const { width } = Dimensions.get("screen");
 
-const { width } = Dimensions.get('screen');
+import util from "../../util";
 
-import util from '../../util';
+import { modalRef as modalRefCost } from "./../modal/addCost";
 
-import { modalRef as modalRefCost } from './../modal/addCost';
-
-import { navigate } from '../../services/navigation';
+import { navigate } from "../../services/navigation";
 
 const OVERFLOW_HEIGHT = 70;
 const SPACING = 5;
@@ -27,6 +40,7 @@ const VISIBLE_ITEMS = 3;
 const OverflowItems = ({ data, scrollXAnimated }) => {
   const dispatch = useDispatch();
   const inputRange = [-1, 0, 1];
+  const { t, i18n } = useTranslation();
   const translateY = scrollXAnimated.interpolate({
     inputRange,
     outputRange: [OVERFLOW_HEIGHT, 0, -OVERFLOW_HEIGHT * 2],
@@ -47,21 +61,31 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                 </Text>
                 <Text style={[styles.age]}>{item.age}</Text>
               </View>
-              <Spacer size="15px"/>
+              <Spacer size="15px" />
               <View style={styles.itemContainerRow}>
-                <Button width="45%" background="greenLight" size={16}
-                  onPress={async () => { 
-                      await dispatch(setCostAction({petId}))
-                      modalRefCost?.current?.open()
-                    }
-                  }>Add cost</Button>
-                <Button width="45%" background="blueLight" size={16}
-                 onPress={async () => { 
-                      await dispatch(setCostAction({petId}))   
-                      dispatch(setForm({ loading: true }));
-                      navigate('HistoryCost');
-                  }
-                }>History</Button>
+                <Button
+                  width="50%"
+                  background="greenLight"
+                  size={16}
+                  onPress={async () => {
+                    await dispatch(setCostAction({ petId }));
+                    modalRefCost?.current?.open();
+                  }}
+                >
+                  {t("Add cost")}
+                </Button>
+                <Button
+                  width="50%"
+                  background="blueLight"
+                  size={16}
+                  onPress={async () => {
+                    await dispatch(setCostAction({ petId }));
+                    dispatch(setForm({ loading: true }));
+                    navigate("HistoryCost");
+                  }}
+                >
+                  {t("History")}
+                </Button>
               </View>
             </View>
           );
@@ -99,7 +123,7 @@ const FlatListAnimated = () => {
 
   return (
     <FlingGestureHandler
-      key='left'
+      key="left"
       direction={Directions.LEFT}
       onHandlerStateChange={(ev) => {
         if (ev.nativeEvent.state === State.END) {
@@ -109,7 +133,7 @@ const FlatListAnimated = () => {
       }}
     >
       <FlingGestureHandler
-        key='right'
+        key="right"
         direction={Directions.RIGHT}
         onHandlerStateChange={(ev) => {
           if (ev.nativeEvent.state === State.END) {
@@ -119,7 +143,7 @@ const FlatListAnimated = () => {
         }}
       >
         <SafeAreaView style={styles.container}>
-          <OverflowItems data={data} scrollXAnimated={scrollXAnimated}/>
+          <OverflowItems data={data} scrollXAnimated={scrollXAnimated} />
           <FlatList
             data={data}
             keyExtractor={(_, index) => String(index)}
@@ -127,7 +151,7 @@ const FlatListAnimated = () => {
             inverted
             contentContainerStyle={{
               flex: 1,
-              justifyContent: 'center',
+              justifyContent: "center",
               padding: SPACING * 2,
               marginTop: 20,
             }}
@@ -165,14 +189,14 @@ const FlatListAnimated = () => {
               return (
                 <Animated.View
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     left: -ITEM_WIDTH / 2,
                     opacity,
                     transform: [{ translateX }, { scale }],
                   }}
                 >
                   <Image
-                    source={{ uri: `${util.AWS.bucketURL}/${item.photo}`}}
+                    source={{ uri: `${util.AWS.bucketURL}/${item.photo}` }}
                     style={{
                       width: ITEM_WIDTH,
                       height: ITEM_HEIGHT,
@@ -187,39 +211,39 @@ const FlatListAnimated = () => {
       </FlingGestureHandler>
     </FlingGestureHandler>
   );
-}
+};
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      backgroundColor: '#fff',
-    },
-    name: {
-      fontSize: 28,
-      fontWeight: '900',
-      textTransform: 'uppercase',
-      letterSpacing: -1,
-    },
-    species: {
-      fontSize: 16,
-    },
-    age: {
-      fontSize: 14,
-    },
-    itemContainer: {
-      height: OVERFLOW_HEIGHT * 2,
-      padding: SPACING * 2,
-    },
-    itemContainerRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    overflowContainer: {
-      height: OVERFLOW_HEIGHT * 2,
-      overflow: 'hidden',
-    },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#fff",
+  },
+  name: {
+    fontSize: 28,
+    fontWeight: "900",
+    textTransform: "uppercase",
+    letterSpacing: -1,
+  },
+  species: {
+    fontSize: 16,
+  },
+  age: {
+    fontSize: 14,
+  },
+  itemContainer: {
+    height: OVERFLOW_HEIGHT * 2,
+    padding: SPACING * 2,
+  },
+  itemContainerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  overflowContainer: {
+    height: OVERFLOW_HEIGHT * 2,
+    overflow: "hidden",
+  },
 });
 
 export default FlatListAnimated;

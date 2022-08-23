@@ -31,11 +31,11 @@ import LoginSchema from "./../../schemas/login.schema";
 import KeyboardAvoidingWrapper from "./../../components/Keyboard/KeyboardAvoidingWrapper";
 
 import { navigate, replace } from "./../../services/navigation";
-
+import { useTranslation } from "react-i18next";
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [loggedState, setLoggedState] = useState(false);
-
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const { userForm, form } = useSelector((state) => state.app);
 
@@ -86,7 +86,7 @@ const Login = () => {
         {loggedState && (
           <>
             <Title medium background="brand">
-              Account Login
+              {t("Account Login")}
             </Title>
             <Spacer size="30px" />
             <TextInput
@@ -127,7 +127,7 @@ const Login = () => {
             <Spacer />
             <TextLink>
               <TextLinkContent hasPadding color="blueLight" small>
-                Forget password?
+                {t("Forget password?")}
               </TextLinkContent>
             </TextLink>
             <Spacer size="40px" />
@@ -136,16 +136,16 @@ const Login = () => {
               loading={form?.saving}
               onPress={() => sendLogin()}
             >
-              Login
+              {t("Login")}
             </Button>
             <Spacer size="30px" />
             <ExtraView>
               <ExtraText width="auto">
-                Don't have an account already?{" "}
+                {t("Don't have an account already?")}{" "}
               </ExtraText>
               <TextLink width="auto" onPress={() => navigate("Signup")}>
                 <TextLinkContent hasPadding medium>
-                  Signup
+                  {t("Signup")}
                 </TextLinkContent>
               </TextLink>
             </ExtraView>

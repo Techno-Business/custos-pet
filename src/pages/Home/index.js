@@ -40,10 +40,10 @@ const Home = () => {
             <ActivityIndicator color="brand" size="large" />
             <Spacer size="40px" />
             <Title color="tertiary" medium>
-              Searching for information
+              {t("Searching for information")}
             </Title>
             <Spacer size="10px" />
-            <TextP align="center">Please wait a moment...</TextP>
+            <TextP align="center"> {t("Please wait a moment...")}</TextP>
           </Box>
         )}
 

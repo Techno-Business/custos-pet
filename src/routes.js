@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 import { StatusBar } from "react-native";
 import { colors } from "./assets/theme.json";
@@ -20,7 +21,7 @@ import AddPetScreen from "./pages/AddPet";
 import HistoryCost from "./pages/HistoryCost";
 import MapsScreen from "./pages/Maps";
 import ConfigScreen from "./pages/Config";
-
+import { useTranslation } from "react-i18next";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -51,16 +52,6 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="TestScreen"
-        component={HomeScreen}
-        options={{
-          tabBarLabel: "Test",
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="home" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="MapsScreen"
         component={MapsScreen}
         options={{
@@ -76,7 +67,7 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: "Config",
           tabBarIcon: ({ color, size }) => (
-            <Icon name="google-maps" color={color} size={size} />
+            <AntDesign name="setting" color={color} size={size} />
           ),
         }}
       />

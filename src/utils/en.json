@@ -1,9 +1,27 @@
 {
   "translation": {
-    "Change language": "Change language",
+    "Choose language": "Choose language",
     "Test": "Test",
     "internacionalization": "internacionalization",
     "No pet registered at the moment": "No pet registered at the moment",
-    "Add new pet": "Add new pet"
+    "Add new pet": "Add new pet",
+    "Add cost": "Add cost",
+    "History": "History",
+    "Add pet": "Add pet",
+    "Register pet": "Register pet",
+    "History cost": "History cost",
+    "No cost registered at the moment": "No cost registered at the moment",
+    "Searching for information": "Searching for information",
+    "Please wait a moment...": "Please wait a moment...",
+    "Forget password?": "Forget password?",
+    "Don't have an account already?": "Don't have an account already?",
+    "Signup": "Signup",
+    "Login": "Login",
+    "Account Login": "Account Login",
+    "VETERINARIAN": "VETERINARIAN",
+    "Account Signup": "Account Signup",
+    "Already have an account?": "Already have an account?",
+    "Home": "Home",
+    "Dog": "Dog"
   }
 }

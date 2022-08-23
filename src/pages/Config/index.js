@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../utils/i18n";
 
+import SwitchSelector from "react-native-switch-selector";
+
 import { useTranslation } from "react-i18next";
 
 import {
@@ -16,6 +18,12 @@ import {
   TextLinkContent,
   ActivityIndicator,
 } from "../../components";
+import { Switch } from "react-native-gesture-handler";
+
+const options = [
+  { label: "Inglês", value: "en" },
+  { label: "Português", value: "pt" },
+];
 
 const Config = () => {
   const { t, i18n } = useTranslation();
@@ -32,14 +40,18 @@ const Config = () => {
   };
 
   return (
-    <Box background="primary" hasPadding aling="center" justify="center">
-      <ExtraView>
-        <ExtraText width="auto">{t("Change language")}</ExtraText>
-      </ExtraView>
-      <Spacer size="40px" />
-      <Button onPress={() => changeLanguage("pt")}>Português</Button>
-      <Spacer size="40px" />
-      <Button onPress={() => changeLanguage("en")}>Inglês</Button>
+    <Box>
+      <ExtraText width="auto">{t("Choose language")}</ExtraText>
+      <SwitchSelector
+        options={options}
+        textColor={"#1F2937"}
+        selectedColor={"#1F2937"}
+        buttonColor={"#d59563"}
+        borderColor={"#F05603"}
+        hasPadding
+        initial={0}
+        onPress={(value) => changeLanguage(value)}
+      />
     </Box>
   );
 };
