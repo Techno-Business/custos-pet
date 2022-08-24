@@ -109,7 +109,7 @@ const HistoryCost = () => {
             height="100px"
           >
             <TextP align="left" medium bold>
-              COST TOTAL:
+              {t("COST TOTAL:")}
             </TextP>
             <TextP align="right" color="greenLight" big bold>
               {`R$ ${(cost?.costTotal / 100)

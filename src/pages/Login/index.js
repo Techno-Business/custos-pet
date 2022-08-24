@@ -107,7 +107,7 @@ const Login = () => {
             <Spacer size="15px" />
             <TextInput
               ref={passwordInputRef}
-              label="Password"
+              label={t("Password")}
               placeholder="* * * * * * * * *"
               secureTextEntry={hidePassword}
               left={<TextInput.Icon name="lock" color="#F0560A" />}

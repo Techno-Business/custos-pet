@@ -67,7 +67,7 @@ const ModalAddCost = () => {
         <Spacer size="20px" />
         <View style={{ width: "100%" }}>
           <DropDownP
-            label={"Type"}
+            label={t("Type")}
             visible={showDropDown}
             showDropDown={() => setShowDropDown(true)}
             onDismiss={() => setShowDropDown(false)}
@@ -79,9 +79,9 @@ const ModalAddCost = () => {
               setCost({ type });
             }}
             list={[
-              { label: "Service", value: "Service" },
-              { label: "Vaccine", value: "Vaccine" },
-              { label: "Feed", value: "Feed" },
+              { label: i18n.t("Service"), value: "Service" },
+              { label: i18n.t("Vaccine"), value: "Vaccine" },
+              { label: i18n.t("Feed"), value: "Feed" },
             ]}
           />
         </View>
@@ -91,7 +91,7 @@ const ModalAddCost = () => {
             if (costForm?.type != "Feed") goalInputRef.current.focus();
             else brandInputRef.current.focus();
           }}
-          label="Date"
+          label={t("Date")}
           type={"datetime"}
           options={{
             format: "DD/MM/YYYY",
@@ -111,7 +111,7 @@ const ModalAddCost = () => {
             onSubmitEditing={() => {
               weightInputRef.current.focus();
             }}
-            label="Brand"
+            label={t("Brand")}
             width="50%"
             spacing="0 4px 0 0"
             placeholder="Pedigree"
@@ -127,7 +127,7 @@ const ModalAddCost = () => {
             onSubmitEditing={() => {
               goalInputRef.current.focus();
             }}
-            label="Weight"
+            label={t("Weight")}
             width="50%"
             spacing="0 0 0 4px"
             placeholder="4,2"
@@ -143,8 +143,8 @@ const ModalAddCost = () => {
         <Spacer />
         <TextInput
           ref={goalInputRef}
-          label="Goal"
-          placeholder="Description"
+          label={t("Goal")}
+          placeholder={t("Description")}
           left={<TextInput.Icon name="flag-checkered" color="#F0560A" />}
           disabled={form?.loading}
           value={costForm?.goal}
@@ -154,7 +154,7 @@ const ModalAddCost = () => {
         ></TextInput>
         <Spacer />
         <TextInputMask
-          label="Price"
+          label={t("Price")}
           type={"money"}
           options={{
             precision: 2,

@@ -26,6 +26,8 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const TabNavigator = () => {
+  const { t, i18n } = useTranslation();
+  const logout = i18n.t("Logout");
   return (
     <Tab.Navigator
       screenOptions={{
@@ -55,7 +57,7 @@ const TabNavigator = () => {
         name="MapsScreen"
         component={MapsScreen}
         options={{
-          tabBarLabel: "Maps",
+          tabBarLabel: i18n.t("Maps"),
           tabBarIcon: ({ color, size }) => (
             <Icon name="google-maps" color={color} size={size} />
           ),
@@ -75,7 +77,7 @@ const TabNavigator = () => {
         name="Logout"
         component={LoginScreen}
         options={({ route }) => ({
-          tabBarLabel: "Logout",
+          tabBarLabel: i18n.t("Logout"),
           tabBarStyle: {
             display: getTabBarVisibility(route.name),
           },

@@ -62,7 +62,7 @@ const Signup = () => {
           onSubmitEditing={() => {
             lastNameInputRef.current.focus();
           }}
-          label="Firstname"
+          label={t("Firstname")}
           placeholder="Brayan"
           left={<TextInput.Icon name="account" color="#F0560A" />}
           disabled={form?.saving}
@@ -77,7 +77,7 @@ const Signup = () => {
           onSubmitEditing={() => {
             emailInputRef.current.focus();
           }}
-          label="Lastname"
+          label={t("Lastname")}
           placeholder="Uehara"
           left={<TextInput.Icon name="account" color="#F0560A" />}
           disabled={form?.saving}
@@ -108,7 +108,7 @@ const Signup = () => {
           onSubmitEditing={() => {
             passwordConfirmInputRef.current.focus();
           }}
-          label="Password"
+          label={t("Password")}
           placeholder="* * * * * * * * *"
           secureTextEntry={hidePassword}
           left={<TextInput.Icon name="lock" color="#F0560A" />}
@@ -128,7 +128,7 @@ const Signup = () => {
         <Spacer size="15px" />
         <TextInput
           ref={passwordConfirmInputRef}
-          label="Confirm Password"
+          label={t("Confirm Password")}
           placeholder="* * * * * * * * *"
           secureTextEntry={hidePassword}
           left={<TextInput.Icon name="lock" color="#F0560A" />}

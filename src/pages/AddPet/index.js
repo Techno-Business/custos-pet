@@ -6,7 +6,7 @@ import {
   setPet as setPetAction,
   savePet,
 } from "./../../store/modules/app/actions";
-import { useTranslation } from "react-i18next";
+
 import {
   Box,
   Spacer,
@@ -21,7 +21,7 @@ import Uploader from "./../../components/uploader";
 import KeyboardAvoidingWrapper from "./../../components/Keyboard/KeyboardAvoidingWrapper";
 
 import AddPetSchema from "./../../schemas/addPet.schema";
-
+import { useTranslation } from "react-i18next";
 import { navigate } from "../../services/navigation";
 
 const AddPet = () => {
@@ -38,7 +38,7 @@ const AddPet = () => {
       await AddPetSchema.validate(petForm);
       dispatch(savePet());
     } catch ({ errors }) {
-      Alert.alert(errors[0], "Correct the errors before continuing");
+      Alert.alert(errors[0], i18n.t("Correct the errors before continuing"));
     }
   };
 
@@ -70,9 +70,9 @@ const AddPet = () => {
         </Box>
         <Spacer size="20px" />
         <Uploader
-          title="Select a photo"
-          desc="This will be your pet's photo"
-          btnDesc="Select photo"
+          title={t("Select a photo")}
+          desc={t("This will be your pet's photo")}
+          btnDesc={t("Select photo")}
           image={petForm?.photo?.uri}
           callback={(photo) => {
             setPet({ photo });
@@ -88,7 +88,7 @@ const AddPet = () => {
             width="50%"
             spacing="0 8px 0 0"
             small
-            label="Name"
+            label={t("Name")}
             placeholder="Orácio"
             left={<TextInput.Icon name="paw" color="#F0560A" />}
             disabled={form?.loading}
@@ -113,8 +113,8 @@ const AddPet = () => {
                 setPet({ sex });
               }}
               list={[
-                { label: "Male", value: "Male" },
-                { label: "Female", value: "Female" },
+                { label: i18n.t("Male"), value: "Male" },
+                { label: i18n.t("Female"), value: "Female" },
               ]}
             />
           </View>
@@ -129,8 +129,8 @@ const AddPet = () => {
             width="50%"
             spacing="0 4px 0 0"
             small
-            label="Age"
-            placeholder="2 years"
+            label={t("Age")}
+            placeholder={t("2 years")}
             left={<TextInput.Icon name="calendar" color="#F0560A" />}
             disabled={form?.loading}
             value={petForm?.age}
@@ -146,7 +146,7 @@ const AddPet = () => {
             width="50%"
             spacing="0 0 0 4px"
             small
-            label="Weight"
+            label={t("Weight")}
             placeholder="4.2"
             keyboardType="numeric"
             left={<TextInput.Icon name="weight" color="#F0560A" />}
@@ -168,8 +168,8 @@ const AddPet = () => {
             width="50%"
             spacing="0 4px 0 0"
             small
-            label="Species"
-            placeholder="Dog"
+            label={t("Specie")}
+            placeholder={t("Dog")}
             left={<TextInput.Icon name="dog" color="#F0560A" />}
             disabled={form?.loading}
             value={petForm?.species}
@@ -182,7 +182,7 @@ const AddPet = () => {
             width="50%"
             spacing="0 0 0 4px"
             small
-            label="Breed"
+            label={t("Breed")}
             placeholder="Bulldog"
             left={<TextInput.Icon name="koala" color="#F0560A" />}
             disabled={form?.loading}
