@@ -22,12 +22,15 @@ import HistoryCost from "./pages/HistoryCost";
 import MapsScreen from "./pages/Maps";
 import ConfigScreen from "./pages/Config";
 import { useTranslation } from "react-i18next";
+
+import ModalFeatures from "./components/modal/features";
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
 const TabNavigator = () => {
   const { t, i18n } = useTranslation();
   const logout = i18n.t("Logout");
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -54,14 +57,20 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="MapsScreen"
-        component={MapsScreen}
+        name="featureScreen"
+        component={ModalFeatures}
         options={{
-          tabBarLabel: i18n.t("Maps"),
+          tabBarLabel: i18n.t("Features"),
           tabBarIcon: ({ color, size }) => (
             <Icon name="google-maps" color={color} size={size} />
           ),
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            e.preventDefault();
+            navigation.navigate("ModalFeatures");
+          },
+        })}
       />
       <Tab.Screen
         name="ConfigScreen"
@@ -137,6 +146,20 @@ const Routes = () => {
             options={{ headerShown: false }}
             name="HistoryCost"
             component={HistoryCost}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="MapsScreen"
+            component={MapsScreen}
+          />
+          <Stack.Screen
+            options={{
+              presentation: "transparentModal",
+              headerShown: false,
+              cardOverlayEnabled: false,
+            }}
+            name="ModalFeatures"
+            component={ModalFeatures}
           />
         </Stack.Navigator>
       </NavigationContainer>
