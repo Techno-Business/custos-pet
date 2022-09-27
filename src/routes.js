@@ -21,9 +21,11 @@ import AddPetScreen from "./pages/AddPet";
 import HistoryCost from "./pages/HistoryCost";
 import MapsScreen from "./pages/Maps";
 import ConfigScreen from "./pages/Config";
+import EditPetScreen from "./pages/EditPet";
 import { useTranslation } from "react-i18next";
 
 import ModalFeatures from "./components/modal/features";
+import AddPet from "./pages/AddPet";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -144,6 +146,11 @@ const Routes = () => {
           />
           <Stack.Screen
             options={{ headerShown: false }}
+            name="EditPet"
+            component={EditPetScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
             name="HistoryCost"
             component={HistoryCost}
           />
@@ -156,7 +163,7 @@ const Routes = () => {
             options={{
               presentation: "transparentModal",
               headerShown: false,
-              cardOverlayEnabled: false,
+              cardOverlayEnabled: true,
             }}
             name="ModalFeatures"
             component={ModalFeatures}

@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Box, Title } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import * as Location from "expo-location";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { REACT_APP_GOOGLE_MAPS_API_KEY } from "@env";
 import { useTranslation } from "react-i18next";
+import { navigate } from "./../../services/navigation";
+
 import {
   ButtonText,
   mapStyle,
   StatusBarHeight,
   StyledButton,
   Colors,
+  Button,
 } from "./../../components";
 
 let baseMapsAPIURL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json`;
@@ -116,13 +119,27 @@ const Maps = () => {
           );
         })}
       </MapView>
+
       <View style={styles.mapDetails}>
-        <StyledButton onPress={searchVeterinarians}>
-          <ButtonText>{t("VETERINARIAN")}</ButtonText>
-        </StyledButton>
-        <StyledButton onPress={searchPetStores}>
-          <ButtonText>PET SHOP</ButtonText>
-        </StyledButton>
+        <View style={{ width: "15%", marginRight: 30, paddingTop: 5 }}>
+          <Button
+            width="10%"
+            spacing="0 40px 0 0"
+            hasPadding="0 0 0 15px"
+            icon="home"
+            size={30}
+            onPress={() => navigate("Home")}
+          ></Button>
+        </View>
+
+        <View style={{ width: "60%" }}>
+          <StyledButton onPress={searchVeterinarians}>
+            <ButtonText>{t("VETERINARIAN")}</ButtonText>
+          </StyledButton>
+          <StyledButton onPress={searchPetStores}>
+            <ButtonText>PET SHOP</ButtonText>
+          </StyledButton>
+        </View>
       </View>
     </View>
   );
@@ -144,8 +161,10 @@ const styles = StyleSheet.create({
   mapDetails: {
     position: "absolute",
     alignSelf: "center",
-    width: 280,
+    width: 320,
     top: 10,
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   bubble: {
     flexDirection: "row",

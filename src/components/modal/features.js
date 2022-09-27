@@ -10,7 +10,11 @@ const ModalFeatures = ({ navigation: { goBack } }) => {
   return (
     <>
       <Spacer size="20px" />
-      <Modal visible={visibleModal} transparent={true}>
+      <Modal
+        visible={visibleModal}
+        transparent={true}
+        onRequestClose={() => goBack()}
+      >
         <TouchableOpacity
           style={{ flex: 1, zIndex: 9 }}
           onPress={() => {
@@ -21,9 +25,7 @@ const ModalFeatures = ({ navigation: { goBack } }) => {
           <View style={styles.content}>
             <Button>{t("Dashboard")}</Button>
             <Spacer />
-            <Button onPress={() => navigate("AddPet")}>
-              {t("Localization")}
-            </Button>
+            <Button onPress={() => navigate("AddPet")}>{t("Calendar")}</Button>
             <Spacer />
             <Button
               onPress={() => {
@@ -31,7 +33,7 @@ const ModalFeatures = ({ navigation: { goBack } }) => {
                 navigate("MapsScreen");
               }}
             >
-              {t("Calendar")}
+              {t("Localization")}
             </Button>
           </View>
         </View>
@@ -50,7 +52,12 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     borderRadius: 20,
-    backgroundColor: "#E5E7EB",
+    backgroundColor: "#FFFFFF",
+    borderColor: "#F0560A",
+    borderStyle: "solid",
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
     justifyContent: "center",
   },
 });
