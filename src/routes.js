@@ -21,13 +21,18 @@ import AddPetScreen from "./pages/AddPet";
 import HistoryCost from "./pages/HistoryCost";
 import MapsScreen from "./pages/Maps";
 import ConfigScreen from "./pages/Config";
+import EditPetScreen from "./pages/EditPet";
 import { useTranslation } from "react-i18next";
+
+import ModalFeatures from "./components/modal/features";
+import AddPet from "./pages/AddPet";
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
 const TabNavigator = () => {
   const { t, i18n } = useTranslation();
   const logout = i18n.t("Logout");
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -54,14 +59,20 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="MapsScreen"
-        component={MapsScreen}
+        name="featureScreen"
+        component={ModalFeatures}
         options={{
-          tabBarLabel: i18n.t("Maps"),
+          tabBarLabel: i18n.t("Features"),
           tabBarIcon: ({ color, size }) => (
             <Icon name="google-maps" color={color} size={size} />
           ),
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            e.preventDefault();
+            navigation.navigate("ModalFeatures");
+          },
+        })}
       />
       <Tab.Screen
         name="ConfigScreen"
@@ -135,8 +146,27 @@ const Routes = () => {
           />
           <Stack.Screen
             options={{ headerShown: false }}
+            name="EditPet"
+            component={EditPetScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
             name="HistoryCost"
             component={HistoryCost}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="MapsScreen"
+            component={MapsScreen}
+          />
+          <Stack.Screen
+            options={{
+              presentation: "transparentModal",
+              headerShown: false,
+              cardOverlayEnabled: true,
+            }}
+            name="ModalFeatures"
+            component={ModalFeatures}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -55,6 +55,10 @@
     "Cost added successfully!": "Cost added successfully!",
     "Type": "Type",
     "English": "English",
-    "Portuguese": "Portuguese"
+    "Portuguese": "Portuguese",
+    "Dashboard": "Dashboard",
+    "Localization": "Localization",
+    "Calendar": "Calendar",
+    "Features": "Features"
   }
 }
