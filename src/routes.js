@@ -21,7 +21,6 @@ import AddPetScreen from "./pages/AddPet";
 import HistoryCost from "./pages/HistoryCost";
 import MapsScreen from "./pages/Maps";
 import ConfigScreen from "./pages/Config";
-import EditPetScreen from "./pages/EditPet";
 import { useTranslation } from "react-i18next";
 
 import ModalFeatures from "./components/modal/features";
@@ -143,11 +142,6 @@ const Routes = () => {
             options={{ headerShown: false }}
             name="AddPet"
             component={AddPetScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="EditPet"
-            component={EditPetScreen}
           />
           <Stack.Screen
             options={{ headerShown: false }}
