@@ -15,6 +15,7 @@ import moment from "moment";
 import { modalRef as modalRefCost } from "../../../components/modal/addCost";
 
 import { replace } from "../../../services/navigation";
+const apiV1 = "api/v1/";
 
 export function* loginUser() {
   const { userForm } = yield select((state) => state.app);
@@ -22,12 +23,16 @@ export function* loginUser() {
   yield put(setForm({ saving: true }));
 
   try {
-    const { data: res } = yield call(api.post, `owner/signin`, userForm);
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/signin`,
+      userForm
+    );
 
     if (res.error) throw new Error(res.message);
 
-    yield call(AsyncStorage.setItem, "@user", JSON.stringify(res.owner));
-    yield put(setReducer("user", res.owner));
+    yield call(AsyncStorage.setItem, "@user", JSON.stringify(res));
+    yield put(setReducer("user", res));
     yield put(reset("userForm"));
     yield put(reset("petForm"));
     yield put(reset("costForm"));
@@ -45,7 +50,11 @@ export function* saveUser() {
   yield put(setForm({ saving: true }));
 
   try {
-    const { data: res } = yield call(api.post, `/owner/signup`, userForm);
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/signup`,
+      userForm
+    );
 
     if (res.error) throw new Error(res.message);
 
@@ -85,11 +94,16 @@ export function* savePet() {
     form.append("species", petForm?.species);
     form.append("breed", petForm?.breed);
 
-    const { data: res } = yield call(api.post, `/pet/addpet`, form, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/${user?.id}/pets`,
+      form,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
     if (res.error) {
       Alert.alert("Ops!", res.message, [
@@ -177,7 +191,13 @@ export function* getPet() {
   yield put(setForm({ loading: true }));
 
   try {
-    const { data: res } = yield call(api.get, `/owner/pets/${user?._id}`);
+    const { data: res } = yield call(
+      api.get,
+      `${apiV1}/owner/${user?.id}/pets`
+    );
+    console.log(res);
+    console.log(res[0]);
+    console.log(res[1]);
 
     if (res.error) {
       yield put(reset("pet"));
