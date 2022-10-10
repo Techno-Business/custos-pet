@@ -124,7 +124,7 @@ export function* saveCost() {
 
   try {
     const objectCost = {};
-    objectCost.petId = costForm?.petId;
+    objectCost.petId = [...costForm?.petId];
     objectCost.type = costForm?.type;
     objectCost.date = moment(costForm?.date, "DD/MM/YYYY").format("YYYY-MM-DD");
     objectCost.price =
