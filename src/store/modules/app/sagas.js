@@ -163,13 +163,14 @@ export function* saveCost() {
 
   try {
     const objectCost = {};
-    objectCost.petId = costForm?.petId;
+    objectCost.petId = Array.of(costForm?.petId);
     objectCost.type = costForm?.type;
     objectCost.date = moment(costForm?.date, "DD/MM/YYYY").format("YYYY-MM-DD");
     objectCost.price =
       costForm?.price.slice(2).replace(/\./g, "").replace(/,/g, ".") * 100;
     objectCost.goal = costForm?.goal;
-    objectCost.service_type = "";
+    //TODO: add service type w/ predefined choices via enum and etc
+    //objectCost.service_type = "";
 
     const ownerId = user?.id;
 
