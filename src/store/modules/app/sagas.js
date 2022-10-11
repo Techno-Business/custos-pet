@@ -91,7 +91,7 @@ export function* getPet() {
       return false;
     }
 
-    console.log(yield put(setReducer("pet", res)));
+    yield put(setReducer("pet", res));
   } catch (err) {
     Alert.alert("Internal error", err.message);
   } finally {
@@ -106,7 +106,7 @@ export function* savePet() {
 
   try {
     const form = new FormData();
-    form.append("ownerId", user?._id);
+    form.append("ownerId", user?.id);
     form.append("name", petForm?.name);
     form.append("photo", {
       name: new Date().getTime() + "." + util.getMimeType(petForm?.photo?.uri),
@@ -157,7 +157,7 @@ export function* savePet() {
 }
 
 export function* saveCost() {
-  const { costForm } = yield select((state) => state.app);
+  const { costForm, user } = yield select((state) => state.app);
 
   yield put(setForm({ saving: true }));
 
@@ -169,16 +169,11 @@ export function* saveCost() {
     objectCost.price =
       costForm?.price.slice(2).replace(/\./g, "").replace(/,/g, ".") * 100;
     objectCost.goal = costForm?.goal;
+    objectCost.service_type = "";
 
-    if (costForm.type == "Feed") {
-      const extra = {
-        brand: costForm?.brand,
-        weight: costForm?.weight.replace(/,/g, "."),
-      };
-      objectCost.extra = extra;
-    }
+    const ownerId = user?.id;
 
-    const { data: res } = yield call(api.post, `/pet/addcost`, objectCost);
+    const { data: res } = yield call(api.post, `${apiV1}/owner/${ownerId}/costs`, objectCost);
 
     if (res.error) {
       Alert.alert("Ops!", res.message, [
