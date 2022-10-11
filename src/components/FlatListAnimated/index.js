@@ -48,7 +48,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
   return (
     <View style={styles.overflowContainer}>
       <Animated.View style={{ transform: [{ translateY }] }}>
-        {data.map((item, index) => {
+        {data?.map((item, index) => {
           const petId = item._id;
           return (
             <View key={index} style={styles.itemContainer}>
