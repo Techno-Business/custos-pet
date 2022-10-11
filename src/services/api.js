@@ -1,8 +1,9 @@
 import axios from "axios";
+import { LOCALHOST_ADDRESS } from "@env";
 
 const api = axios.create({
   baseURL: __DEV__
-    ? "http://192.168.15.8:8000/"
+    ? LOCALHOST_ADDRESS
     : "https://custospet.herokuapp.com/",
 });
 

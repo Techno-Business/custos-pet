@@ -97,7 +97,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
 
 const FlatListAnimated = () => {
   const { pet } = useSelector((state) => state.app);
-  const [data, setData] = React.useState(pet.pets);
+  const [data, setData] = React.useState(pet);
 
   const scrollXIndex = React.useRef(new Animated.Value(0)).current;
   const scrollXAnimated = React.useRef(new Animated.Value(0)).current;

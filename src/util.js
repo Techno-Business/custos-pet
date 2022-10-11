@@ -1,3 +1,5 @@
+import { BUCKET_ADDRESS } from "@env";
+
 export default {
   toAlpha: (hex, alpha) => {
     const alphas = {
@@ -26,7 +28,7 @@ export default {
     return hex + alphas[alpha];
   },
   AWS: {
-    bucketURL: "https://custospet-api-staging.s3.amazonaws.com",
+    bucketURL: BUCKET_ADDRESS,
   },
   getMimeType: (name) => {
     const types = {

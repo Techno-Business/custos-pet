@@ -15,34 +15,8 @@ import moment from "moment";
 import { modalRef as modalRefCost } from "../../../components/modal/addCost";
 
 import { replace } from "../../../services/navigation";
-const apiV1 = "api/v1/";
 
-export function* loginUser() {
-  const { userForm } = yield select((state) => state.app);
-
-  yield put(setForm({ saving: true }));
-
-  try {
-    const { data: res } = yield call(
-      api.post,
-      `${apiV1}/owner/signin`,
-      userForm
-    );
-
-    if (res.error) throw new Error(res.message);
-
-    yield call(AsyncStorage.setItem, "@user", JSON.stringify(res));
-    yield put(setReducer("user", res));
-    yield put(reset("userForm"));
-    yield put(reset("petForm"));
-    yield put(reset("costForm"));
-    yield call(replace, "Home");
-  } catch (err) {
-    yield call(Alert.alert, "Internal error", err.message);
-  } finally {
-    yield put(setForm({ saving: false }));
-  }
-}
+const apiV1 = "api/v1";
 
 export function* saveUser() {
   const { userForm } = yield select((state) => state.app);
@@ -71,6 +45,57 @@ export function* saveUser() {
     yield call(Alert.alert, "Internal error", err.message);
   } finally {
     yield put(setForm({ saving: false }));
+  }
+}
+
+export function* loginUser() {
+  const { userForm } = yield select((state) => state.app);
+
+  yield put(setForm({ saving: true }));
+
+  try {
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/signin`,
+      userForm
+    );
+
+    if (res.error) throw new Error(res.message);
+
+    yield call(AsyncStorage.setItem, "@user", JSON.stringify(res));
+    yield put(setReducer("user", res));
+    yield put(reset("userForm"));
+    yield put(reset("petForm"));
+    yield put(reset("costForm"));
+    yield call(replace, "Home");
+  } catch (err) {
+    yield call(Alert.alert, "Internal error", err.message);
+  } finally {
+    yield put(setForm({ saving: false }));
+  }
+}
+
+export function* getPet() {
+  const { user } = yield select((state) => state.app);
+
+  yield put(setForm({ loading: true }));
+
+  try {
+    const { data: res } = yield call(
+      api.get,
+      `${apiV1}/owner/${user?.id}/pets`
+    );
+
+    if (res.error) {
+      yield put(reset("pet"));
+      return false;
+    }
+
+    console.log(yield put(setReducer("pet", res)));
+  } catch (err) {
+    Alert.alert("Internal error", err.message);
+  } finally {
+    yield put(setForm({ loading: false }));
   }
 }
 
@@ -185,33 +210,6 @@ export function* saveCost() {
   }
 }
 
-export function* getPet() {
-  const { user } = yield select((state) => state.app);
-
-  yield put(setForm({ loading: true }));
-
-  try {
-    const { data: res } = yield call(
-      api.get,
-      `${apiV1}/owner/${user?.id}/pets`
-    );
-    console.log(res);
-    console.log(res[0]);
-    console.log(res[1]);
-
-    if (res.error) {
-      yield put(reset("pet"));
-      return false;
-    }
-
-    yield put(setReducer("pet", res));
-  } catch (err) {
-    Alert.alert("Internal error", err.message);
-  } finally {
-    yield put(setForm({ loading: false }));
-  }
-}
-
 export function* getCost() {
   const { costForm } = yield select((state) => state.app);
 
@@ -234,10 +232,10 @@ export function* getCost() {
 }
 
 export default all([
-  takeLatest(types.LOGIN_USER, loginUser),
   takeLatest(types.SAVE_USER, saveUser),
-  takeLatest(types.SAVE_PET, savePet),
+  takeLatest(types.LOGIN_USER, loginUser),
   takeLatest(types.GET_PET, getPet),
+  takeLatest(types.SAVE_PET, savePet),
   takeLatest(types.SAVE_COST, saveCost),
   takeLatest(types.GET_COST, getCost),
 ]);
