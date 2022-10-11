@@ -207,12 +207,15 @@ export function* saveCost() {
 }
 
 export function* getCost() {
-  const { costForm } = yield select((state) => state.app);
+  const { costForm, user } = yield select((state) => state.app);
+
+  const ownerId = user.id;
+  const petId = costForm.petId;
 
   yield put(setForm({ loading: true }));
 
   try {
-    const { data: res } = yield call(api.get, `/pet/costs/${costForm?.petId}`);
+    const { data: res } = yield call(api.get, `${apiV1}/owner/${ownerId}/costs/pets/${petId}`);
 
     if (res.error) {
       yield put(reset("cost"));
