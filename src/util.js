@@ -1,5 +1,7 @@
 import { BUCKET_ADDRESS } from "@env";
 
+const bucketAddress = BUCKET_ADDRESS;
+
 export default {
   toAlpha: (hex, alpha) => {
     const alphas = {
@@ -28,7 +30,7 @@ export default {
     return hex + alphas[alpha];
   },
   AWS: {
-    bucketURL: BUCKET_ADDRESS,
+    bucketURL: bucketAddress,
   },
   getMimeType: (name) => {
     const types = {
