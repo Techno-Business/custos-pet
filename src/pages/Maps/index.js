@@ -34,8 +34,6 @@ const Maps = () => {
       let { statusPermission } =
         await Location.requestForegroundPermissionsAsync();
       if (statusPermission !== "granted") {
-        console.log(statusPermission);
-        console.log("Permissão de acesso a localização negada.");
         return;
       }
     })();
@@ -62,7 +60,6 @@ const Maps = () => {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
-      console.log(location.coords);
     })();
   }, []);
 
@@ -75,22 +72,16 @@ const Maps = () => {
     fetch(mapsApi)
       .then((response) => response.json())
       .then((data) => {
-        console.log("==========-=-=-============");
         setMarkers(data.results);
-        console.log(`array 'results' from fetch '${placetype}': ${markers}`);
-        console.log("==========-=-=-============");
       })
       .catch((error) => console.log(error));
-    console.log(mapsApi);
   };
 
   const searchVeterinarians = () => {
-    console.log("search veterinarians");
     searchGeneric("veterinary_care");
   };
 
   const searchPetStores = () => {
-    console.log("search pet stores");
     searchGeneric("pet_store");
   };
 

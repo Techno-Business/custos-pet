@@ -48,8 +48,8 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
   return (
     <View style={styles.overflowContainer}>
       <Animated.View style={{ transform: [{ translateY }] }}>
-        {data.map((item, index) => {
-          const petId = item._id;
+        {data?.map((item, index) => {
+          const petId = item.id;
           return (
             <View key={index} style={styles.itemContainer}>
               <Text style={[styles.name]} numberOfLines={1}>
@@ -97,7 +97,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
 
 const FlatListAnimated = () => {
   const { pet } = useSelector((state) => state.app);
-  const [data, setData] = React.useState(pet.pets);
+  const [data, setData] = React.useState(pet);
 
   const scrollXIndex = React.useRef(new Animated.Value(0)).current;
   const scrollXAnimated = React.useRef(new Animated.Value(0)).current;

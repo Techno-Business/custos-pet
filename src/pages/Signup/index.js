@@ -49,7 +49,7 @@ const Signup = () => {
   const lastNameInputRef = useRef();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-  const passwordConfirmInputRef = useRef();
+  const passwordConfirmationInputRef = useRef();
 
   return (
     <KeyboardAvoidingWrapper>
@@ -106,7 +106,7 @@ const Signup = () => {
         <TextInput
           ref={passwordInputRef}
           onSubmitEditing={() => {
-            passwordConfirmInputRef.current.focus();
+            passwordConfirmationInputRef.current.focus();
           }}
           label={t("Password")}
           placeholder="* * * * * * * * *"
@@ -127,7 +127,7 @@ const Signup = () => {
         ></TextInput>
         <Spacer size="15px" />
         <TextInput
-          ref={passwordConfirmInputRef}
+          ref={passwordConfirmationInputRef}
           label={t("Confirm Password")}
           placeholder="* * * * * * * * *"
           secureTextEntry={hidePassword}
@@ -140,9 +140,9 @@ const Signup = () => {
             />
           }
           disabled={form?.saving}
-          value={userForm?.passwordConfirm}
-          onChangeText={(passwordConfirm) => {
-            setUser({ passwordConfirm });
+          value={userForm?.passwordConfirmation}
+          onChangeText={(passwordConfirmation) => {
+            setUser({ passwordConfirmation });
           }}
         ></TextInput>
         <Spacer size="40px" />

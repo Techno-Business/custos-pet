@@ -130,7 +130,8 @@ const AddPet = () => {
             spacing="0 4px 0 0"
             small
             label={t("Age")}
-            placeholder={t("2 years")}
+            placeholder={t("2")}
+            keyboardType="numeric"
             left={<TextInput.Icon name="calendar" color="#F0560A" />}
             disabled={form?.loading}
             value={petForm?.age}
