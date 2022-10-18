@@ -47,7 +47,7 @@ const Home = () => {
           </Box>
         )}
 
-        {!pet?.pets && !form?.loading && (
+        {!pet[0] && !form?.loading && (
           <Box hasPadding align="center" justify="center">
             <Cover
               source={illustration}
@@ -62,7 +62,7 @@ const Home = () => {
           </Box>
         )}
 
-        {pet?.pets && !form?.loading && (
+        {pet[0] && !form?.loading && (
           <Box height="90%" justify="center" align="center">
             <FlatListAnimated />
           </Box>

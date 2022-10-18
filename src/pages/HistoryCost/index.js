@@ -56,7 +56,7 @@ const HistoryCost = () => {
         </>
       )}
 
-      {!cost?.costs && !form?.loading && (
+      {!cost?.costsDto && !form?.loading && (
         <Box hasPadding justify="center" align="center">
           <Cover
             source={illustration}
@@ -72,12 +72,12 @@ const HistoryCost = () => {
         </Box>
       )}
 
-      {cost?.costs && !form?.loading && (
+      {cost?.costsDto && !form?.loading && (
         <Box hasPadding>
           <Box row>
             <FlatList
-              data={cost?.costs}
-              keyExtractor={(item) => item?._id}
+              data={cost?.costsDto}
+              keyExtractor={(item) => item?.id}
               renderItem={({ item, index }) => (
                 <Box
                   hasPadding

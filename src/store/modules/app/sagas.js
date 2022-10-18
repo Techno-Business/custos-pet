@@ -16,28 +16,7 @@ import { modalRef as modalRefCost } from "../../../components/modal/addCost";
 
 import { replace } from "../../../services/navigation";
 
-export function* loginUser() {
-  const { userForm } = yield select((state) => state.app);
-
-  yield put(setForm({ saving: true }));
-
-  try {
-    const { data: res } = yield call(api.post, `owner/signin`, userForm);
-
-    if (res.error) throw new Error(res.message);
-
-    yield call(AsyncStorage.setItem, "@user", JSON.stringify(res.owner));
-    yield put(setReducer("user", res.owner));
-    yield put(reset("userForm"));
-    yield put(reset("petForm"));
-    yield put(reset("costForm"));
-    yield call(replace, "Home");
-  } catch (err) {
-    yield call(Alert.alert, "Internal error", err.message);
-  } finally {
-    yield put(setForm({ saving: false }));
-  }
-}
+const apiV1 = "api/v1";
 
 export function* saveUser() {
   const { userForm } = yield select((state) => state.app);
@@ -45,7 +24,11 @@ export function* saveUser() {
   yield put(setForm({ saving: true }));
 
   try {
-    const { data: res } = yield call(api.post, `/owner/signup`, userForm);
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/signup`,
+      userForm
+    );
 
     if (res.error) throw new Error(res.message);
 
@@ -65,6 +48,57 @@ export function* saveUser() {
   }
 }
 
+export function* loginUser() {
+  const { userForm } = yield select((state) => state.app);
+
+  yield put(setForm({ saving: true }));
+
+  try {
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/signin`,
+      userForm
+    );
+
+    if (res.error) throw new Error(res.message);
+
+    yield call(AsyncStorage.setItem, "@user", JSON.stringify(res));
+    yield put(setReducer("user", res));
+    yield put(reset("userForm"));
+    yield put(reset("petForm"));
+    yield put(reset("costForm"));
+    yield call(replace, "Home");
+  } catch (err) {
+    yield call(Alert.alert, "Internal error", err.message);
+  } finally {
+    yield put(setForm({ saving: false }));
+  }
+}
+
+export function* getPet() {
+  const { user } = yield select((state) => state.app);
+
+  yield put(setForm({ loading: true }));
+
+  try {
+    const { data: res } = yield call(
+      api.get,
+      `${apiV1}/owner/${user?.id}/pets`
+    );
+
+    if (res.error) {
+      yield put(reset("pet"));
+      return false;
+    }
+
+    yield put(setReducer("pet", res));
+  } catch (err) {
+    Alert.alert("Internal error", err.message);
+  } finally {
+    yield put(setForm({ loading: false }));
+  }
+}
+
 export function* savePet() {
   const { petForm, user } = yield select((state) => state.app);
 
@@ -72,7 +106,7 @@ export function* savePet() {
 
   try {
     const form = new FormData();
-    form.append("ownerId", user?._id);
+    form.append("ownerId", user?.id);
     form.append("name", petForm?.name);
     form.append("photo", {
       name: new Date().getTime() + "." + util.getMimeType(petForm?.photo?.uri),
@@ -85,11 +119,16 @@ export function* savePet() {
     form.append("species", petForm?.species);
     form.append("breed", petForm?.breed);
 
-    const { data: res } = yield call(api.post, `/pet/addpet`, form, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/${user?.id}/pets`,
+      form,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
     if (res.error) {
       Alert.alert("Ops!", res.message, [
@@ -118,28 +157,24 @@ export function* savePet() {
 }
 
 export function* saveCost() {
-  const { costForm } = yield select((state) => state.app);
+  const { costForm, user } = yield select((state) => state.app);
 
   yield put(setForm({ saving: true }));
 
   try {
     const objectCost = {};
-    objectCost.petId = costForm?.petId;
+    objectCost.petId = Array.of(costForm?.petId);
     objectCost.type = costForm?.type;
     objectCost.date = moment(costForm?.date, "DD/MM/YYYY").format("YYYY-MM-DD");
     objectCost.price =
       costForm?.price.slice(2).replace(/\./g, "").replace(/,/g, ".") * 100;
     objectCost.goal = costForm?.goal;
+    //TODO: add service type w/ predefined choices via enum and etc
+    //objectCost.service_type = "";
 
-    if (costForm.type == "Feed") {
-      const extra = {
-        brand: costForm?.brand,
-        weight: costForm?.weight.replace(/,/g, "."),
-      };
-      objectCost.extra = extra;
-    }
+    const ownerId = user?.id;
 
-    const { data: res } = yield call(api.post, `/pet/addcost`, objectCost);
+    const { data: res } = yield call(api.post, `${apiV1}/owner/${ownerId}/costs`, objectCost);
 
     if (res.error) {
       Alert.alert("Ops!", res.message, [
@@ -171,34 +206,16 @@ export function* saveCost() {
   }
 }
 
-export function* getPet() {
-  const { user } = yield select((state) => state.app);
-
-  yield put(setForm({ loading: true }));
-
-  try {
-    const { data: res } = yield call(api.get, `/owner/pets/${user?._id}`);
-
-    if (res.error) {
-      yield put(reset("pet"));
-      return false;
-    }
-
-    yield put(setReducer("pet", res));
-  } catch (err) {
-    Alert.alert("Internal error", err.message);
-  } finally {
-    yield put(setForm({ loading: false }));
-  }
-}
-
 export function* getCost() {
-  const { costForm } = yield select((state) => state.app);
+  const { costForm, user } = yield select((state) => state.app);
+
+  const ownerId = user.id;
+  const petId = costForm.petId;
 
   yield put(setForm({ loading: true }));
 
   try {
-    const { data: res } = yield call(api.get, `/pet/costs/${costForm?.petId}`);
+    const { data: res } = yield call(api.get, `${apiV1}/owner/${ownerId}/costs/pets/${petId}`);
 
     if (res.error) {
       yield put(reset("cost"));
@@ -214,10 +231,10 @@ export function* getCost() {
 }
 
 export default all([
-  takeLatest(types.LOGIN_USER, loginUser),
   takeLatest(types.SAVE_USER, saveUser),
-  takeLatest(types.SAVE_PET, savePet),
+  takeLatest(types.LOGIN_USER, loginUser),
   takeLatest(types.GET_PET, getPet),
+  takeLatest(types.SAVE_PET, savePet),
   takeLatest(types.SAVE_COST, saveCost),
   takeLatest(types.GET_COST, getCost),
 ]);
