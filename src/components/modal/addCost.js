@@ -2,20 +2,17 @@ import React, {
   createRef,
   useState,
   useRef,
-  forwardRef,
-  useEffect,
-  Component,
+  useEffect
 } from "react";
-import { Alert, View, Text, SafeAreaView, StyleSheet } from "react-native";
-import { useTranslation } from "react-i18next";
+import { Alert, View, SafeAreaView, FlatList, StyleSheet } from "react-native";
+import TextInputMask from "./../TextInputMask";
+import { Modalize } from "react-native-modalize";
 import MultiSelect from "react-native-multiple-select";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCost as setCostAction,
   saveCost,
 } from "../../store/modules/app/actions";
-import { FlatList } from "react-native";
 
 import {
   Box,
@@ -24,36 +21,29 @@ import {
   TextInput,
   Title,
   DropDownP,
-  TextP,
 } from "./../../components";
-import SelectBox from "react-native-multi-selectbox";
-import TextInputMask from "./../TextInputMask";
-import { xorBy } from "lodash";
-import AddCostSchema from "../../schemas/addCost.schema";
-import { getPet } from "../../store/modules/app/actions";
 
-import { Modalize } from "react-native-modalize";
+import { getPet } from "../../store/modules/app/actions";
+import AddCostSchema from "../../schemas/addCost.schema";
+import { useTranslation } from "react-i18next";
 
 export const modalRef = createRef();
 
 const ModalAddCost = () => {
   const dispatch = useDispatch();
-  const [selectedTeam, setSelectedTeam] = useState({});
-  const [selectedTeams, setSelectedTeams] = useState([]);
+
   const { costForm, form } = useSelector((state) => state.app);
-  const { pet } = useSelector((state) => state.app);
-  const [selectedItems, setSelectedItems] = useState([]);
   const setCost = (payload) => {
     dispatch(setCostAction(payload));
   };
+
+  const [selectedItems, setSelectedItems] = useState([]);
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
-
-    for (let i = 0; i < selectedItems.length; i++) {
-      var tempItem = DATA.find((item) => item.id === selectedItems[i]);
-      console.log(tempItem);
-    }
+    console.log("selected items at onselecteditemschange:");
+    console.log(selectedItems);
   };
+
   useEffect(() => {
     dispatch(getPet());
   }, []);
@@ -69,21 +59,11 @@ const ModalAddCost = () => {
 
   const [showDropDown, setShowDropDown] = useState(false);
 
-  //const items = [{ name: "a" }, { name: "b" }, { name: "c" }];
-  const [data, setData] = React.useState(pet.pets);
+  const { pet } = useSelector((state) => state.app);
 
-  const DATA = [
-    { id: 1, name: "Python" },
-    { id: 2, name: "Java" },
-    { id: 3, name: "JavaScript" },
-    { id: 4, name: "C" },
-    { id: 5, name: "PHP" },
-    { id: 6, name: "Swift" },
-    { id: 7, name: "Ruby" },
-    { id: 8, name: "Dart" },
-    { id: 9, name: "SQL" },
-    { id: 10, name: "Perl" },
-  ];
+  const items = Array.from(pet).map(e => ({id: e.id, name: e.name}));
+  console.log("items:");
+  console.log(items);
 
   const brandInputRef = useRef();
   const weightInputRef = useRef();
@@ -130,21 +110,14 @@ const ModalAddCost = () => {
 
           <SafeAreaView style={{ flex: 1 }}>
             <View style={styleSheet.MainContainer}>
-              <Text style={styleSheet.text}>
-                {" "}
-                React Native Multiple Select{" "}
-              </Text>
-
               <MultiSelect
                 hideTags
-                items={pet?.pets}
-                //items={DATA}
-                uniqueKey="name"
+                items={items}
+                uniqueKey="id"
                 onSelectedItemsChange={onSelectedItemsChange}
-                //onSelectedItemsChange={() => }
                 selectedItems={selectedItems}
-                selectText="Select Items"
-                searchInputPlaceholderText="Search Items Here..."
+                selectText="Select pets"
+                searchInputPlaceholderText="Search pets here..."
                 onChangeInput={(text) => console.log(text)}
                 tagRemoveIconColor="#CCC"
                 tagBorderColor="#CCC"
@@ -156,8 +129,6 @@ const ModalAddCost = () => {
                 searchInputStyle={{ color: "#CCC" }}
                 submitButtonColor="#00BFA5"
                 submitButtonText="Submit"
-                // { label: items[1].name, value: "Vaccine" },
-                //<View>{this.multiSelect.getSelectedItemsExt(selectedItems)}</View>
               />
             </View>
           </SafeAreaView>
