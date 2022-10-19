@@ -1,10 +1,5 @@
-import React, {
-  createRef,
-  useState,
-  useRef,
-  useEffect
-} from "react";
-import {Alert, View, SafeAreaView, FlatList, StyleSheet, ScrollView} from "react-native";
+import React, { createRef, useState, useRef, useEffect } from "react";
+import { Alert, View, StyleSheet, ScrollView } from "react-native";
 import TextInputMask from "./../TextInputMask";
 import { Modalize } from "react-native-modalize";
 import MultiSelect from "react-native-multiple-select";
@@ -59,7 +54,7 @@ const ModalAddCost = () => {
 
   const { pet } = useSelector((state) => state.app);
 
-  const items = Array.from(pet).map(e => ({id: e.id, name: e.name}));
+  const items = Array.from(pet).map((e) => ({ id: e.id, name: e.name }));
 
   const brandInputRef = useRef();
   const weightInputRef = useRef();
@@ -111,8 +106,8 @@ const ModalAddCost = () => {
                 items={items}
                 uniqueKey="id"
                 onSelectedItemsChange={(petId) => {
-                  setCost({ petId })
-                  onSelectedItemsChange(petId)
+                  setCost({ petId });
+                  onSelectedItemsChange(petId);
                 }}
                 selectedItems={selectedItems}
                 selectText="Select pets"
@@ -120,11 +115,11 @@ const ModalAddCost = () => {
                 tagRemoveIconColor="#CCC"
                 tagBorderColor="#CCC"
                 tagTextColor="#CCC"
-                selectedItemTextColor="#CCC"
-                selectedItemIconColor="#CCC"
+                selectedItemTextColor="#F0560A"
+                selectedItemIconColor="#F0560A"
                 itemTextColor="#000"
                 displayKey="name"
-                searchInputStyle={{ color: "#CCC" }}
+                searchInputStyle={{ color: "#F0560A" }}
                 submitButtonColor="#00BFA5"
                 submitButtonText="Submit"
                 hideSubmitButton={true}
@@ -240,16 +235,9 @@ const ModalAddCost = () => {
 const styleSheet = StyleSheet.create({
   MainContainer: {
     flex: 1,
-    padding: 12,
+    paddingTop: 12,
     backgroundColor: "white",
-  },
-
-  text: {
-    padding: 12,
-    fontSize: 22,
-    textAlign: "center",
-    fontWeight: "bold",
-    color: "black",
+    width: 320,
   },
 });
 
