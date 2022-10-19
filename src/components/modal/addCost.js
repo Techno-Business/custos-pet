@@ -4,7 +4,7 @@ import React, {
   useRef,
   useEffect
 } from "react";
-import { Alert, View, SafeAreaView, FlatList, StyleSheet } from "react-native";
+import {Alert, View, SafeAreaView, FlatList, StyleSheet, ScrollView} from "react-native";
 import TextInputMask from "./../TextInputMask";
 import { Modalize } from "react-native-modalize";
 import MultiSelect from "react-native-multiple-select";
@@ -104,7 +104,7 @@ const ModalAddCost = () => {
             ]}
           />
 
-          <SafeAreaView style={{ flex: 1 }}>
+          <ScrollView horizontal={true} style={{ flex: 1 }}>
             <View style={styleSheet.MainContainer}>
               <MultiSelect
                 hideTags
@@ -130,7 +130,7 @@ const ModalAddCost = () => {
                 hideSubmitButton={true}
               />
             </View>
-          </SafeAreaView>
+          </ScrollView>
         </View>
 
         <Spacer />
