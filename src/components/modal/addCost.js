@@ -40,8 +40,6 @@ const ModalAddCost = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
-    console.log("selected items at onselecteditemschange:");
-    console.log(selectedItems);
   };
 
   useEffect(() => {
@@ -62,8 +60,6 @@ const ModalAddCost = () => {
   const { pet } = useSelector((state) => state.app);
 
   const items = Array.from(pet).map(e => ({id: e.id, name: e.name}));
-  console.log("items:");
-  console.log(items);
 
   const brandInputRef = useRef();
   const weightInputRef = useRef();
@@ -121,7 +117,6 @@ const ModalAddCost = () => {
                 selectedItems={selectedItems}
                 selectText="Select pets"
                 searchInputPlaceholderText="Search pets here..."
-                onChangeInput={(text) => console.log(text)}
                 tagRemoveIconColor="#CCC"
                 tagBorderColor="#CCC"
                 tagTextColor="#CCC"
@@ -132,6 +127,7 @@ const ModalAddCost = () => {
                 searchInputStyle={{ color: "#CCC" }}
                 submitButtonColor="#00BFA5"
                 submitButtonText="Submit"
+                hideSubmitButton={true}
               />
             </View>
           </SafeAreaView>
@@ -183,6 +179,7 @@ const ModalAddCost = () => {
             width="50%"
             spacing="0 0 0 4px"
             placeholder="4,2"
+            keyboardType="numeric"
             left={<TextInput.Icon name="weight" color="#F0560A" />}
             right={<TextInput.Affix text="Kg" />}
             disabled={form?.loading || costForm?.type != "Feed"}
