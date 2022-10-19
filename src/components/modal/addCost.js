@@ -18,7 +18,6 @@ import {
   DropDownP,
 } from "./../../components";
 
-import { getPet } from "../../store/modules/app/actions";
 import AddCostSchema from "../../schemas/addCost.schema";
 import { useTranslation } from "react-i18next";
 
@@ -36,10 +35,6 @@ const ModalAddCost = () => {
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
   };
-
-  useEffect(() => {
-    dispatch(getPet());
-  }, []);
 
   const sendCost = async () => {
     try {
@@ -99,7 +94,7 @@ const ModalAddCost = () => {
             ]}
           />
 
-          <ScrollView horizontal={true} style={{ flex: 1 }}>
+          <ScrollView horizontal={true} contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styleSheet.MainContainer}>
               <MultiSelect
                 hideTags
@@ -237,7 +232,7 @@ const styleSheet = StyleSheet.create({
     flex: 1,
     paddingTop: 12,
     backgroundColor: "white",
-    width: 320,
+    width: "100%",
   },
 });
 
