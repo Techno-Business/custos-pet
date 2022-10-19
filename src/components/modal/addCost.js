@@ -114,7 +114,10 @@ const ModalAddCost = () => {
                 hideTags
                 items={items}
                 uniqueKey="id"
-                onSelectedItemsChange={onSelectedItemsChange}
+                onSelectedItemsChange={(petId) => {
+                  setCost({ petId })
+                  onSelectedItemsChange(petId)
+                }}
                 selectedItems={selectedItems}
                 selectText="Select pets"
                 searchInputPlaceholderText="Search pets here..."
