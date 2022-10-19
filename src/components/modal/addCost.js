@@ -1,6 +1,8 @@
-import React, { createRef, useState, useRef, forwardRef } from "react";
-import { Alert, View } from "react-native";
-import { useTranslation } from "react-i18next";
+import React, { createRef, useState, useRef, useEffect } from "react";
+import { Alert, View, StyleSheet, ScrollView } from "react-native";
+import TextInputMask from "./../TextInputMask";
+import { Modalize } from "react-native-modalize";
+import MultiSelect from "react-native-multiple-select";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCost as setCostAction,
@@ -16,20 +18,22 @@ import {
   DropDownP,
 } from "./../../components";
 
-import TextInputMask from "./../TextInputMask";
-
 import AddCostSchema from "../../schemas/addCost.schema";
-
-import { Modalize } from "react-native-modalize";
+import { useTranslation } from "react-i18next";
 
 export const modalRef = createRef();
 
 const ModalAddCost = () => {
   const dispatch = useDispatch();
-  const { costForm, form } = useSelector((state) => state.app);
 
+  const { costForm, form } = useSelector((state) => state.app);
   const setCost = (payload) => {
     dispatch(setCostAction(payload));
+  };
+
+  const [selectedItems, setSelectedItems] = useState([]);
+  const onSelectedItemsChange = (selectedItems) => {
+    setSelectedItems(selectedItems);
   };
 
   const sendCost = async () => {
@@ -42,6 +46,10 @@ const ModalAddCost = () => {
   };
 
   const [showDropDown, setShowDropDown] = useState(false);
+
+  const { pet } = useSelector((state) => state.app);
+
+  const items = Array.from(pet).map((e) => ({ id: e.id, name: e.name }));
 
   const brandInputRef = useRef();
   const weightInputRef = useRef();
@@ -59,6 +67,7 @@ const ModalAddCost = () => {
             size={25}
             onPress={() => modalRef?.current?.close()}
           ></Button>
+
           <Title big width="auto">
             {" "}
             {t("Add cost")}
@@ -84,7 +93,36 @@ const ModalAddCost = () => {
               { label: i18n.t("Feed"), value: "Feed" },
             ]}
           />
+
+          <ScrollView horizontal={true} contentContainerStyle={{ flexGrow: 1 }}>
+            <View style={styleSheet.MainContainer}>
+              <MultiSelect
+                hideTags
+                items={items}
+                uniqueKey="id"
+                onSelectedItemsChange={(petId) => {
+                  setCost({ petId });
+                  onSelectedItemsChange(petId);
+                }}
+                selectedItems={selectedItems}
+                selectText="Select pets"
+                searchInputPlaceholderText="Search pets here..."
+                tagRemoveIconColor="#CCC"
+                tagBorderColor="#CCC"
+                tagTextColor="#CCC"
+                selectedItemTextColor="#F0560A"
+                selectedItemIconColor="#F0560A"
+                itemTextColor="#000"
+                displayKey="name"
+                searchInputStyle={{ color: "#F0560A" }}
+                submitButtonColor="#00BFA5"
+                submitButtonText="Submit"
+                hideSubmitButton={true}
+              />
+            </View>
+          </ScrollView>
         </View>
+
         <Spacer />
         <TextInputMask
           onSubmitEditing={() => {
@@ -131,6 +169,7 @@ const ModalAddCost = () => {
             width="50%"
             spacing="0 0 0 4px"
             placeholder="4,2"
+            keyboardType="numeric"
             left={<TextInput.Icon name="weight" color="#F0560A" />}
             right={<TextInput.Affix text="Kg" />}
             disabled={form?.loading || costForm?.type != "Feed"}
@@ -187,5 +226,14 @@ const ModalAddCost = () => {
     </Modalize>
   );
 };
+
+const styleSheet = StyleSheet.create({
+  MainContainer: {
+    flex: 1,
+    paddingTop: 12,
+    backgroundColor: "white",
+    width: "100%",
+  },
+});
 
 export default ModalAddCost;

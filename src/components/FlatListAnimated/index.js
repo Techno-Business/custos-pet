@@ -68,7 +68,6 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                   background="greenLight"
                   size={16}
                   onPress={async () => {
-                    await dispatch(setCostAction({ petId }));
                     modalRefCost?.current?.open();
                   }}
                 >
