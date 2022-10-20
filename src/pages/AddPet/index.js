@@ -164,7 +164,7 @@ const AddPet = () => {
         <Box row align="center" justify="space-between">
           <View style={{ width: "50%" }}>
             <DropDownP
-                label={ i18n.t("Species")}
+                label={ i18n.t("Category")}
                 visible={showSpeciesDropDown}
                 showDropDown={() => setShowSpeciesDropDown(true)}
                 onDismiss={() => setShowSpeciesDropDown(false)}
@@ -182,6 +182,8 @@ const AddPet = () => {
                   { label: i18n.t("Cat"), value: "Cat" },
                   { label: i18n.t("Fish"), value: "Fish" },
                   { label: i18n.t("Rodent"), value: "Rodent" },
+                  { label: i18n.t("Reptile"), value: "Reptile" },
+                  { label: i18n.t("Amphibian"), value: "Amphibian" },
                   { label: i18n.t("Other"), value: "Other" },
                 ]}
             />
