@@ -27,6 +27,8 @@
     "Fish": "Fish",
     "Rodent": "Rodent",
     "Other": "Other",
+    "Sex": "Sex",
+    "Species": "Espécie",
     "Logout": "Logout",
     "Maps": "Maps",
     "Correct the errors before continuing": "Correct the errors before continuing",

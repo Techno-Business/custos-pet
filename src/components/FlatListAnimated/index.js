@@ -57,7 +57,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
               </Text>
               <View style={styles.itemContainerRow}>
                 <Text style={[styles.species]}>
-                  {item.species}, {item.breed}
+                  {i18n.t(item.species)}, {item.breed}
                 </Text>
                 <Text style={[styles.age]}>{item.age}</Text>
               </View>

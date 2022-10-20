@@ -100,7 +100,7 @@ const AddPet = () => {
           ></TextInput>
           <View style={{ width: "50%" }}>
             <DropDownP
-              label={"Sex"}
+              label={ i18n.t("Sex")}
               visible={showSexDropDown}
               showDropDown={() => setShowSexDropDown(true)}
               onDismiss={() => setShowSexDropDown(false)}
@@ -164,7 +164,7 @@ const AddPet = () => {
         <Box row align="center" justify="space-between">
           <View style={{ width: "50%" }}>
             <DropDownP
-                label={"Species"}
+                label={ i18n.t("Species")}
                 visible={showSpeciesDropDown}
                 showDropDown={() => setShowSpeciesDropDown(true)}
                 onDismiss={() => setShowSpeciesDropDown(false)}
