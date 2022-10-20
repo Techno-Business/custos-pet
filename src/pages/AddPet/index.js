@@ -42,7 +42,8 @@ const AddPet = () => {
     }
   };
 
-  const [showDropDown, setShowDropDown] = useState(false);
+  const [showSexDropDown, setShowSexDropDown] = useState(false);
+  const [showSpeciesDropDown, setShowSpeciesDropDown] = useState(false);
 
   const nameInputRef = useRef();
   const ageInputRef = useRef();
@@ -100,9 +101,9 @@ const AddPet = () => {
           <View style={{ width: "50%" }}>
             <DropDownP
               label={"Sex"}
-              visible={showDropDown}
-              showDropDown={() => setShowDropDown(true)}
-              onDismiss={() => setShowDropDown(false)}
+              visible={showSexDropDown}
+              showDropDown={() => setShowSexDropDown(true)}
+              onDismiss={() => setShowSexDropDown(false)}
               inputProps={{
                 left: (
                   <TextInput.Icon name="gender-male-female" color="#F0560A" />
@@ -161,23 +162,30 @@ const AddPet = () => {
         </Box>
         <Spacer />
         <Box row align="center" justify="space-between">
-          <TextInput
-            ref={speciesInputRef}
-            onSubmitEditing={() => {
-              breedInputRef.current.focus();
-            }}
-            width="50%"
-            spacing="0 4px 0 0"
-            small
-            label={t("Specie")}
-            placeholder={t("Dog")}
-            left={<TextInput.Icon name="dog" color="#F0560A" />}
-            disabled={form?.loading}
-            value={petForm?.species}
-            onChangeText={(species) => {
-              setPet({ species });
-            }}
-          ></TextInput>
+          <View style={{ width: "50%" }}>
+            <DropDownP
+                label={"Species"}
+                visible={showSpeciesDropDown}
+                showDropDown={() => setShowSpeciesDropDown(true)}
+                onDismiss={() => setShowSpeciesDropDown(false)}
+                inputProps={{
+                  left: (
+                      <TextInput.Icon name="dog" color="#F0560A" />
+                  ),
+                }}
+                value={petForm?.species || "Dog"}
+                setValue={(species) => {
+                  setPet({ species });
+                }}
+                list={[
+                  { label: i18n.t("Dog"), value: "Dog" },
+                  { label: i18n.t("Cat"), value: "Cat" },
+                  { label: i18n.t("Fish"), value: "Fish" },
+                  { label: i18n.t("Rodent"), value: "Rodent" },
+                  { label: i18n.t("Other"), value: "Other" },
+                ]}
+            />
+          </View>
           <TextInput
             ref={breedInputRef}
             width="50%"
