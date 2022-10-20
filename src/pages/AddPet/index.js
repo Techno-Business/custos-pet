@@ -117,6 +117,9 @@ const AddPet = () => {
                 { label: i18n.t("Male"), value: "Male" },
                 { label: i18n.t("Female"), value: "Female" },
               ]}
+              dropDownStyle={{
+                marginTop: 40,
+              }}
             />
           </View>
         </Box>
@@ -186,6 +189,9 @@ const AddPet = () => {
                   { label: i18n.t("Amphibian"), value: "Amphibian" },
                   { label: i18n.t("Other"), value: "Other" },
                 ]}
+                dropDownStyle={{
+                  marginTop: 40,
+                }}
             />
           </View>
           <TextInput

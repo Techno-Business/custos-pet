@@ -92,6 +92,9 @@ const ModalAddCost = () => {
               { label: i18n.t("Vaccine"), value: "Vaccine" },
               { label: i18n.t("Feed"), value: "Feed" },
             ]}
+            dropDownStyle={{
+              marginTop: 40,
+            }}
           />
 
           <ScrollView horizontal={true} contentContainerStyle={{ flexGrow: 1 }}>
