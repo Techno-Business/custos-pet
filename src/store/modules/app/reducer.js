@@ -4,7 +4,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
     userForm: {},
-    petForm: {sex: 'Male'},
+    petForm: {sex: 'Male', category: 'Dog'},
     costForm: {type: 'Service'},
     user: {},
     pet: {},

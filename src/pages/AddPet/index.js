@@ -42,13 +42,12 @@ const AddPet = () => {
     }
   };
 
-  const [showDropDown, setShowDropDown] = useState(false);
+  const [showSexDropDown, setShowSexDropDown] = useState(false);
+  const [showCategoryDropdown, setShowCategoryDropDown] = useState(false);
 
   const nameInputRef = useRef();
   const ageInputRef = useRef();
-  const weightInputRef = useRef();
-  const speciesInputRef = useRef();
-  const breedInputRef = useRef();
+  const categoryInputRef = useRef();
 
   return (
     <KeyboardAvoidingWrapper>
@@ -86,7 +85,7 @@ const AddPet = () => {
               ageInputRef.current.focus();
             }}
             width="50%"
-            spacing="0 8px 0 0"
+            spacing="0 5px 0 0"
             small
             label={t("Name")}
             placeholder="Orácio"
@@ -99,10 +98,10 @@ const AddPet = () => {
           ></TextInput>
           <View style={{ width: "50%" }}>
             <DropDownP
-              label={"Sex"}
-              visible={showDropDown}
-              showDropDown={() => setShowDropDown(true)}
-              onDismiss={() => setShowDropDown(false)}
+              label={ i18n.t("Sex")}
+              visible={showSexDropDown}
+              showDropDown={() => setShowSexDropDown(true)}
+              onDismiss={() => setShowSexDropDown(false)}
               inputProps={{
                 left: (
                   <TextInput.Icon name="gender-male-female" color="#F0560A" />
@@ -116,6 +115,9 @@ const AddPet = () => {
                 { label: i18n.t("Male"), value: "Male" },
                 { label: i18n.t("Female"), value: "Female" },
               ]}
+              dropDownStyle={{
+                marginTop: 40,
+              }}
             />
           </View>
         </Box>
@@ -124,10 +126,10 @@ const AddPet = () => {
           <TextInput
             ref={ageInputRef}
             onSubmitEditing={() => {
-              weightInputRef.current.focus();
+              categoryInputRef.current.focus();
             }}
             width="50%"
-            spacing="0 4px 0 0"
+            spacing="0 5px 0 0"
             small
             label={t("Age")}
             placeholder={t("2")}
@@ -139,60 +141,37 @@ const AddPet = () => {
               setPet({ age });
             }}
           ></TextInput>
-          <TextInput
-            ref={weightInputRef}
-            onSubmitEditing={() => {
-              speciesInputRef.current.focus();
-            }}
-            width="50%"
-            spacing="0 0 0 4px"
-            small
-            label={t("Weight")}
-            placeholder="4.2"
-            keyboardType="numeric"
-            left={<TextInput.Icon name="weight" color="#F0560A" />}
-            right={<TextInput.Affix text="Kg" />}
-            disabled={form?.loading}
-            value={petForm?.weight}
-            onChangeText={(weight) => {
-              setPet({ weight });
-            }}
-          ></TextInput>
+          <View style={{ width: "50%" }}>
+            <DropDownP
+                label={ i18n.t("Category")}
+                visible={showCategoryDropdown}
+                showDropDown={() => setShowCategoryDropDown(true)}
+                onDismiss={() => setShowCategoryDropDown(false)}
+                inputProps={{
+                  left: (
+                      <TextInput.Icon name="dog" color="#F0560A" />
+                  ),
+                }}
+                value={petForm?.category || "Dog"}
+                setValue={(category) => {
+                  setPet({ category });
+                }}
+                list={[
+                  { label: i18n.t("Dog"), value: "Dog" },
+                  { label: i18n.t("Cat"), value: "Cat" },
+                  { label: i18n.t("Fish"), value: "Fish" },
+                  { label: i18n.t("Rodent"), value: "Rodent" },
+                  { label: i18n.t("Reptile"), value: "Reptile" },
+                  { label: i18n.t("Amphibian"), value: "Amphibian" },
+                  { label: i18n.t("Other"), value: "Other" },
+                ]}
+                dropDownStyle={{
+                  marginTop: 40,
+                }}
+            />
+          </View>
         </Box>
         <Spacer />
-        <Box row align="center" justify="space-between">
-          <TextInput
-            ref={speciesInputRef}
-            onSubmitEditing={() => {
-              breedInputRef.current.focus();
-            }}
-            width="50%"
-            spacing="0 4px 0 0"
-            small
-            label={t("Specie")}
-            placeholder={t("Dog")}
-            left={<TextInput.Icon name="dog" color="#F0560A" />}
-            disabled={form?.loading}
-            value={petForm?.species}
-            onChangeText={(species) => {
-              setPet({ species });
-            }}
-          ></TextInput>
-          <TextInput
-            ref={breedInputRef}
-            width="50%"
-            spacing="0 0 0 4px"
-            small
-            label={t("Breed")}
-            placeholder="Bulldog"
-            left={<TextInput.Icon name="koala" color="#F0560A" />}
-            disabled={form?.loading}
-            value={petForm?.breed}
-            onChangeText={(breed) => {
-              setPet({ breed });
-            }}
-          ></TextInput>
-        </Box>
         <Spacer size="30px" />
         <Button
           disabled={form?.saving}

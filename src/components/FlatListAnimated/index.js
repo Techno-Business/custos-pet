@@ -56,8 +56,8 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                 {item.name}
               </Text>
               <View style={styles.itemContainerRow}>
-                <Text style={[styles.species]}>
-                  {item.species}, {item.breed}
+                <Text style={[styles.category]}>
+                  {i18n.t(item.category)}
                 </Text>
                 <Text style={[styles.age]}>{item.age}</Text>
               </View>
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: -1,
   },
-  species: {
+  category: {
     fontSize: 16,
   },
   age: {

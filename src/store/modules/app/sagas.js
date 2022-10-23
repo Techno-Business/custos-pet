@@ -113,11 +113,9 @@ export function* savePet() {
       type: `image/${util.getMimeType(petForm?.photo?.uri)}`,
       uri: petForm?.photo?.uri,
     });
-    form.append("weight", petForm?.weight.replace(/,/g, "."));
     form.append("age", petForm?.age);
     form.append("sex", petForm?.sex);
-    form.append("species", petForm?.species);
-    form.append("breed", petForm?.breed);
+    form.append("category", petForm?.category);
 
     const { data: res } = yield call(
       api.post,
