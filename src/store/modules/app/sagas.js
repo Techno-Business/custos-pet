@@ -200,7 +200,6 @@ export function* saveCost() {
       ]
     );
   } catch (err) {
-    console.log(err);
     Alert.alert("Internal error", err.message);
   } finally {
     yield put(setForm({ saving: false }));
