@@ -43,12 +43,12 @@ const AddPet = () => {
   };
 
   const [showSexDropDown, setShowSexDropDown] = useState(false);
-  const [showSpeciesDropDown, setShowSpeciesDropDown] = useState(false);
+  const [showCategoryDropdown, setShowCategoryDropDown] = useState(false);
 
   const nameInputRef = useRef();
   const ageInputRef = useRef();
   const weightInputRef = useRef();
-  const speciesInputRef = useRef();
+  const categoryInputRef = useRef();
   const breedInputRef = useRef();
 
   return (
@@ -146,7 +146,7 @@ const AddPet = () => {
           <TextInput
             ref={weightInputRef}
             onSubmitEditing={() => {
-              speciesInputRef.current.focus();
+              categoryInputRef.current.focus();
             }}
             width="50%"
             spacing="0 0 0 4px"
@@ -168,17 +168,17 @@ const AddPet = () => {
           <View style={{ width: "50%" }}>
             <DropDownP
                 label={ i18n.t("Category")}
-                visible={showSpeciesDropDown}
-                showDropDown={() => setShowSpeciesDropDown(true)}
-                onDismiss={() => setShowSpeciesDropDown(false)}
+                visible={showCategoryDropdown}
+                showDropDown={() => setShowCategoryDropDown(true)}
+                onDismiss={() => setShowCategoryDropDown(false)}
                 inputProps={{
                   left: (
                       <TextInput.Icon name="dog" color="#F0560A" />
                   ),
                 }}
-                value={petForm?.species || "Dog"}
-                setValue={(species) => {
-                  setPet({ species });
+                value={petForm?.category || "Dog"}
+                setValue={(category) => {
+                  setPet({ category });
                 }}
                 list={[
                   { label: i18n.t("Dog"), value: "Dog" },

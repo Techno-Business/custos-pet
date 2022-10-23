@@ -116,7 +116,7 @@ export function* savePet() {
     form.append("weight", petForm?.weight.replace(/,/g, "."));
     form.append("age", petForm?.age);
     form.append("sex", petForm?.sex);
-    form.append("species", petForm?.species);
+    form.append("category", petForm?.category);
     form.append("breed", petForm?.breed);
 
     const { data: res } = yield call(
