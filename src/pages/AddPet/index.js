@@ -47,9 +47,7 @@ const AddPet = () => {
 
   const nameInputRef = useRef();
   const ageInputRef = useRef();
-  const weightInputRef = useRef();
   const categoryInputRef = useRef();
-  const breedInputRef = useRef();
 
   return (
     <KeyboardAvoidingWrapper>
@@ -87,7 +85,7 @@ const AddPet = () => {
               ageInputRef.current.focus();
             }}
             width="50%"
-            spacing="0 8px 0 0"
+            spacing="0 5px 0 0"
             small
             label={t("Name")}
             placeholder="Orácio"
@@ -128,10 +126,10 @@ const AddPet = () => {
           <TextInput
             ref={ageInputRef}
             onSubmitEditing={() => {
-              weightInputRef.current.focus();
+              categoryInputRef.current.focus();
             }}
             width="50%"
-            spacing="0 4px 0 0"
+            spacing="0 5px 0 0"
             small
             label={t("Age")}
             placeholder={t("2")}
@@ -143,28 +141,6 @@ const AddPet = () => {
               setPet({ age });
             }}
           ></TextInput>
-          <TextInput
-            ref={weightInputRef}
-            onSubmitEditing={() => {
-              categoryInputRef.current.focus();
-            }}
-            width="50%"
-            spacing="0 0 0 4px"
-            small
-            label={t("Weight")}
-            placeholder="4.2"
-            keyboardType="numeric"
-            left={<TextInput.Icon name="weight" color="#F0560A" />}
-            right={<TextInput.Affix text="Kg" />}
-            disabled={form?.loading}
-            value={petForm?.weight}
-            onChangeText={(weight) => {
-              setPet({ weight });
-            }}
-          ></TextInput>
-        </Box>
-        <Spacer />
-        <Box row align="center" justify="space-between">
           <View style={{ width: "50%" }}>
             <DropDownP
                 label={ i18n.t("Category")}
@@ -194,21 +170,8 @@ const AddPet = () => {
                 }}
             />
           </View>
-          <TextInput
-            ref={breedInputRef}
-            width="50%"
-            spacing="0 0 0 4px"
-            small
-            label={t("Breed")}
-            placeholder="Bulldog"
-            left={<TextInput.Icon name="koala" color="#F0560A" />}
-            disabled={form?.loading}
-            value={petForm?.breed}
-            onChangeText={(breed) => {
-              setPet({ breed });
-            }}
-          ></TextInput>
         </Box>
+        <Spacer />
         <Spacer size="30px" />
         <Button
           disabled={form?.saving}
