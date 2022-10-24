@@ -185,8 +185,8 @@ const ModalAddCost = () => {
         <Spacer />
         <TextInput
           ref={goalInputRef}
-          label={t("Goal")}
-          placeholder={t("Description")}
+          label={t("Description")}
+          placeholder={t("Feed to Bidu")}
           left={<TextInput.Icon name="flag-checkered" color="#F0560A" />}
           disabled={form?.loading}
           value={costForm?.goal}

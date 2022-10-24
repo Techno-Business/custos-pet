@@ -167,6 +167,8 @@ export function* saveCost() {
     objectCost.price =
       costForm?.price.slice(2).replace(/\./g, "").replace(/,/g, ".") * 100;
     objectCost.goal = costForm?.goal;
+    objectCost.brand = costForm?.brand;
+    objectCost.weight = Number(costForm?.weight);
     //TODO: add service type w/ predefined choices via enum and etc
     //objectCost.service_type = "";
 
