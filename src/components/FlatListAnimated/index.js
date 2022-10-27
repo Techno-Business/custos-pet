@@ -66,7 +66,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                 <Button
                   width="50%"
                   background="greenLight"
-                  size={16}
+                  size={12}
                   onPress={async () => {
                     modalRefCost?.current?.open();
                   }}
@@ -76,7 +76,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                 <Button
                   width="50%"
                   background="blueLight"
-                  size={16}
+                  size={12}
                   onPress={async () => {
                     await dispatch(setCostAction({ petId }));
                     dispatch(setForm({ loading: true }));
@@ -219,16 +219,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   name: {
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: "900",
     textTransform: "uppercase",
     letterSpacing: -1,
   },
   category: {
-    fontSize: 16,
+    fontSize: 15,
   },
   age: {
-    fontSize: 14,
+    fontSize: 15,
   },
   itemContainer: {
     height: OVERFLOW_HEIGHT * 2,

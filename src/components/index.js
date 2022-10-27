@@ -69,7 +69,7 @@ export const Title = styled(TitlePaper)`
   width: ${(props) => props.width || "100%"};
   color: ${(props) => props.theme[props.color || "tertiary"]};
   font-size: ${(props) =>
-    props.big ? "32px" : props.medium ? "24px" : "18px"};
+    props.big ? "20px" : props.medium ? "20px" : "20px"};
   line-height: ${(props) =>
     props.big ? "32px" : props.medium ? "24px" : "18px"};
   padding: ${(props) => (props.hasPadding ? "20px" : "0px")};
@@ -84,7 +84,7 @@ export const TextP = styled(TextPaper)`
   width: ${(props) => props.width || "100%"};
   color: ${(props) => props.theme[props.color || "tertiary"]};
   font-size: ${(props) =>
-    props.big ? "24px" : props.medium ? "16px" : props.small ? "13px" : "20px"};
+    props.big ? "20px" : props.medium ? "16px" : props.small ? "13px" : "20px"};
   font-family: ${(props) =>
     props.bold ? "Inter_700Bold" : "Inter_400Regular"};
   font-weight: ${(props) => (props.bold ? "bold" : "normal")};
@@ -96,7 +96,7 @@ export const TextP = styled(TextPaper)`
 `;
 
 export const TextInput = styled(TextInputPaper).attrs(({ theme }) => ({
-  mode: "outlined",
+  mode: "",
   theme: {
     colors: {
       background: theme.primary,
@@ -110,11 +110,11 @@ export const TextInput = styled(TextInputPaper).attrs(({ theme }) => ({
   width: ${(props) => props.width || "100%"};
   margin: ${(props) => props.spacing || 0};
   font-size: ${(props) =>
-    props.big ? "24px" : props.medium ? "18px" : props.small ? "14px" : "16px"};
+    props.big ? "12px" : props.medium ? "12px" : props.small ? "12px" : "12px"};
 `;
 
 export const DropDownP = styled(DropDown).attrs(({ theme }) => ({
-  mode: "outlined",
+  mode: "",
   activeColor: theme.brand,
   theme: {
     colors: {
@@ -134,7 +134,7 @@ export const Button = styled(ButtonPaper).attrs((props) => ({
     color: props.theme[props.textColor || "primary"],
     letterSpacing: 1,
     fontFamily: "Inter_700Bold",
-    fontSize: props.size || 20,
+    fontSize: props.size || 12,
   },
 }))`
   width: ${(props) => props.width || "85%"};
@@ -168,7 +168,7 @@ export const TextLink = styled.TouchableOpacity`
 export const TextLinkContent = styled.Text`
   color: ${(props) => props.theme[props.color || "brand"]};
   font-size: ${(props) =>
-    props.small ? "13px" : props.medium ? "15px" : "20px"};
+    props.small ? "13px" : props.medium ? "15px" : "15px"};
   padding: ${(props) => (props.hasPadding ? "5px" : "0px")};
   background: ${(props) =>
     props.theme[props.background] || props.background || "transparent"};

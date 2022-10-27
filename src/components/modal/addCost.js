@@ -64,7 +64,7 @@ const ModalAddCost = () => {
             spacing="0 60px 0 0"
             hasPadding="0 0 0 15px"
             icon="close"
-            size={25}
+            size={15}
             onPress={() => modalRef?.current?.close()}
           ></Button>
 
@@ -73,7 +73,7 @@ const ModalAddCost = () => {
             {t("Add cost")}
           </Title>
         </Box>
-        <Spacer size="20px" />
+        <Spacer size="10px" />
         <View style={{ width: "100%" }}>
           <DropDownP
             label={t("Type")}
@@ -116,6 +116,7 @@ const ModalAddCost = () => {
                 selectedItemTextColor="#F0560A"
                 selectedItemIconColor="#F0560A"
                 itemTextColor="#000"
+                itemFontSize={15}
                 displayKey="name"
                 searchInputStyle={{ color: "#F0560A" }}
                 submitButtonColor="#00BFA5"
@@ -205,7 +206,7 @@ const ModalAddCost = () => {
             unit: "R$",
             suffixUnit: "",
           }}
-          medium
+          small
           placeholder="60,00"
           left={<TextInput.Icon name="cash" color="#F0560A" />}
           disabled={form?.loading}

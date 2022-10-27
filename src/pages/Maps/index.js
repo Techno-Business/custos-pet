@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     width: 150,
   },
   name: {
-    fontSize: 16,
+    fontSize: 12,
     marginBottom: 5,
   },
 });
