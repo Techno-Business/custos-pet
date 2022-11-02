@@ -23,9 +23,23 @@ const ModalFeatures = ({ navigation: { goBack } }) => {
         ></TouchableOpacity>
         <View style={styles.container}>
           <View style={styles.content}>
-            <Button>{t("Dashboard")}</Button>
+            <Button
+              onPress={() => {
+                setVisibleModal(false);
+                navigate("WixScreen");
+              }}
+            >
+              {t("Dashboard")}
+            </Button>
             <Spacer />
-            <Button onPress={() => navigate("AddPet")}>{t("Calendar")}</Button>
+            <Button
+              onPress={() => {
+                setVisibleModal(false);
+                navigate("CalendarScreen");
+              }}
+            >
+              {t("Calendar")}
+            </Button>
             <Spacer />
             <Button
               onPress={() => {

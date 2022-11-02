@@ -21,8 +21,9 @@ import AddPetScreen from "./pages/AddPet";
 import HistoryCost from "./pages/HistoryCost";
 import MapsScreen from "./pages/Maps";
 import ConfigScreen from "./pages/Config";
+import CalendarScreen from "./pages/Calendar";
 import { useTranslation } from "react-i18next";
-
+import WixScreen from "./pages/Calendar/tes";
 import ModalFeatures from "./components/modal/features";
 import AddPet from "./pages/AddPet";
 
@@ -152,6 +153,16 @@ const Routes = () => {
             options={{ headerShown: false }}
             name="MapsScreen"
             component={MapsScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="CalendarScreen"
+            component={CalendarScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="WixScreen"
+            component={WixScreen}
           />
           <Stack.Screen
             options={{

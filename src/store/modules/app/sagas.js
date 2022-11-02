@@ -6,13 +6,13 @@ import { takeLatest, all, select, put, call } from "redux-saga/effects";
 import { setForm, reset, setReducer } from "./actions";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import api from "./../../../services/api";
 import util from "../../../util";
 
 import moment from "moment";
 
 import { modalRef as modalRefCost } from "../../../components/modal/addCost";
+import { modalizeRef as modalizeRefEvent } from "../../../pages/Calendar";
 
 import { replace } from "../../../services/navigation";
 
@@ -169,12 +169,14 @@ export function* saveCost() {
     objectCost.goal = costForm?.goal;
     objectCost.brand = costForm?.brand;
     objectCost.weight = Number(costForm?.weight);
-    //TODO: add service type w/ predefined choices via enum and etc
-    //objectCost.service_type = "";
 
     const ownerId = user?.id;
 
-    const { data: res } = yield call(api.post, `${apiV1}/owner/${ownerId}/costs`, objectCost);
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/${ownerId}/costs`,
+      objectCost
+    );
 
     if (res.error) {
       Alert.alert("Ops!", res.message, [
@@ -206,27 +208,113 @@ export function* saveCost() {
   }
 }
 
+export function* saveEvent() {
+  const { eventForm, user } = yield select((state) => state.app);
+
+  yield put(setForm({ saving: true }));
+
+  try {
+    const objeticEvent = {};
+    objeticEvent.petId = eventForm?.petId;
+    objeticEvent.tittle = eventForm?.tittle;
+    objeticEvent.date = moment(eventForm?.date, "DD/MM/YYYY").format(
+      "YYYY-MM-DD"
+    );
+    objeticEvent.street = eventForm?.street;
+    objeticEvent.number = eventForm?.number;
+    objeticEvent.postal_code = eventForm?.postal_code;
+    objeticEvent.neighbourhood = eventForm?.neighbourhood;
+
+    const ownerId = user?.id;
+
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/${ownerId}/diaries`,
+      objeticEvent
+    );
+
+    if (res.error) {
+      Alert.alert("Ops!", res.message, [
+        {
+          text: "Try again",
+          onPress: () => {},
+        },
+      ]);
+      return false;
+    }
+
+    yield put(reset("eventForm"));
+    yield call(modalizeRefEvent?.current?.close);
+
+    Alert.alert(
+      "Event added successfully!",
+      "You can consult the Event history now",
+      [
+        {
+          text: "Back to home",
+          onPress: async () => {},
+        },
+      ]
+    );
+  } catch (err) {
+    Alert.alert("Internal error", err.message);
+  } finally {
+    yield put(setForm({ saving: false }));
+  }
+}
 export function* getCost() {
   const { costForm, user } = yield select((state) => state.app);
 
   const ownerId = user.id;
   const petId = costForm.petId;
 
-  yield put(setForm({ loading: true }));
+  yield put(setForm({ saving: true }));
 
   try {
-    const { data: res } = yield call(api.get, `${apiV1}/owner/${ownerId}/costs/pets/${petId}`);
+    const objectEvent = {};
+    objectEvent.petId = eventForm?.petId;
+    objectEvent.title = eventForm?.title;
+    objectEvent.date = moment(eventForm?.date, "DD/MM/YYYY").format(
+      "YYYY-MM-DD"
+    );
+    objectEvent.street = eventForm?.street;
+    objectEvent.number = eventForm?.number;
+    objectEvent.postalCode = eventForm?.postalCode;
+    objectEvent.neighbourhood = eventForm?.neighbourhood;
+
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/${ownerId}/diaries`,
+      objectEvent
+    );
 
     if (res.error) {
-      yield put(reset("cost"));
+      Alert.alert("Ops!", res.message, [
+        {
+          text: "Try again",
+          onPress: () => {},
+        },
+      ]);
       return false;
     }
 
-    yield put(setReducer("cost", res));
+    yield put(reset("eventForm"));
+    yield call(modalizeRefEvent?.current?.close);
+
+    Alert.alert(
+      "Event added successfully!",
+      "You can consult the Event history now",
+      [
+        {
+          text: "Back to home",
+          onPress: async () => {},
+        },
+      ]
+    );
   } catch (err) {
     Alert.alert("Internal error", err.message);
   } finally {
-    yield put(setForm({ loading: false }));
+    yield put(setForm({ saving: false }));
   }
 }
 
@@ -237,4 +325,5 @@ export default all([
   takeLatest(types.SAVE_PET, savePet),
   takeLatest(types.SAVE_COST, saveCost),
   takeLatest(types.GET_COST, getCost),
+  takeLatest(types.SAVE_EVENT, saveEvent),
 ]);
