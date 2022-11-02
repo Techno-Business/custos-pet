@@ -67,6 +67,7 @@ export function* loginUser() {
     yield put(reset("userForm"));
     yield put(reset("petForm"));
     yield put(reset("costForm"));
+    yield put(reset("eventForm"));
     yield call(replace, "Home");
   } catch (err) {
     yield call(Alert.alert, "Internal error", err.message);
@@ -214,23 +215,23 @@ export function* saveEvent() {
   yield put(setForm({ saving: true }));
 
   try {
-    const objeticEvent = {};
-    objeticEvent.petId = eventForm?.petId;
-    objeticEvent.tittle = eventForm?.tittle;
-    objeticEvent.date = moment(eventForm?.date, "DD/MM/YYYY").format(
+    const objectEvent = {};
+    objectEvent.petId = eventForm?.petId;
+    objectEvent.tittle = eventForm?.tittle;
+    objectEvent.date = moment(eventForm?.date, "DD/MM/YYYY").format(
       "YYYY-MM-DD"
     );
-    objeticEvent.street = eventForm?.street;
-    objeticEvent.number = eventForm?.number;
-    objeticEvent.postal_code = eventForm?.postal_code;
-    objeticEvent.neighbourhood = eventForm?.neighbourhood;
+    objectEvent.street = eventForm?.street;
+    objectEvent.number = eventForm?.number;
+    objectEvent.postal_code = eventForm?.postal_code;
+    objectEvent.neighbourhood = eventForm?.neighbourhood;
 
     const ownerId = user?.id;
 
     const { data: res } = yield call(
       api.post,
       `${apiV1}/owner/${ownerId}/diaries`,
-      objeticEvent
+      objectEvent
     );
 
     if (res.error) {
@@ -268,53 +269,24 @@ export function* getCost() {
   const ownerId = user.id;
   const petId = costForm.petId;
 
-  yield put(setForm({ saving: true }));
+  yield put(setForm({ loading: true }));
 
   try {
-    const objectEvent = {};
-    objectEvent.petId = eventForm?.petId;
-    objectEvent.title = eventForm?.title;
-    objectEvent.date = moment(eventForm?.date, "DD/MM/YYYY").format(
-      "YYYY-MM-DD"
-    );
-    objectEvent.street = eventForm?.street;
-    objectEvent.number = eventForm?.number;
-    objectEvent.postalCode = eventForm?.postalCode;
-    objectEvent.neighbourhood = eventForm?.neighbourhood;
-
     const { data: res } = yield call(
-      api.post,
-      `${apiV1}/owner/${ownerId}/diaries`,
-      objectEvent
+      api.get,
+      `${apiV1}/owner/${ownerId}/costs/pets/${petId}`
     );
 
     if (res.error) {
-      Alert.alert("Ops!", res.message, [
-        {
-          text: "Try again",
-          onPress: () => {},
-        },
-      ]);
+      yield put(reset("cost"));
       return false;
     }
 
-    yield put(reset("eventForm"));
-    yield call(modalizeRefEvent?.current?.close);
-
-    Alert.alert(
-      "Event added successfully!",
-      "You can consult the Event history now",
-      [
-        {
-          text: "Back to home",
-          onPress: async () => {},
-        },
-      ]
-    );
+    yield put(setReducer("cost", res));
   } catch (err) {
     Alert.alert("Internal error", err.message);
   } finally {
-    yield put(setForm({ saving: false }));
+    yield put(setForm({ loading: false }));
   }
 }
 
