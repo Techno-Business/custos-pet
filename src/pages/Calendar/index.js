@@ -158,7 +158,7 @@ const Calendario = () => {
         width="50%"
         background="blueLight"
         size={12}
-        onPress={() => {
+        onPress={async () => {
           dispatch(setForm({ loading: true }));
           navigate("EventHistory");
         }}

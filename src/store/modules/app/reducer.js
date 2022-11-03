@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   user: {},
   pet: {},
   cost: {},
+  event: {},
   form: {
     disabled: false,
     loading: false,

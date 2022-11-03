@@ -217,7 +217,7 @@ export function* saveEvent() {
   try {
     const objectEvent = {};
     objectEvent.petId = eventForm?.petId;
-    objectEvent.tittle = eventForm?.tittle;
+    objectEvent.title = eventForm?.title;
     objectEvent.date = moment(eventForm?.date, "DD/MM/YYYY").format(
       "YYYY-MM-DD"
     );
@@ -301,15 +301,15 @@ export function* getEvent() {
   try {
     const { data: res } = yield call(
       api.get,
-      `${apiV1}/owner/${ownerId}/diaries/${Id}`
+      `${apiV1}/owner/${ownerId}/diaries`
     );
 
     if (res.error) {
-      yield put(reset("cost"));
+      yield put(reset("event"));
       return false;
     }
 
-    yield put(setReducer("cost", res));
+    yield put(setReducer("event", res));
   } catch (err) {
     Alert.alert("Internal error", err.message);
   } finally {
@@ -324,6 +324,6 @@ export default all([
   takeLatest(types.SAVE_PET, savePet),
   takeLatest(types.SAVE_COST, saveCost),
   takeLatest(types.GET_COST, getCost),
-  takeLatest(types.GET_EVENT, getCost),
+  takeLatest(types.GET_EVENT, getEvent),
   takeLatest(types.SAVE_EVENT, saveEvent),
 ]);
