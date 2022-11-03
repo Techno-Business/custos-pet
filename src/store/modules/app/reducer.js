@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     user: {},
     pet: {},
     cost: {},
+    ownerCost: {},
     form: {
         disabled: false,
         loading: false,
