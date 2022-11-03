@@ -3,8 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { VictoryBar, VictoryChart, VictoryTheme, VictoryPie } from "victory-native";
-import { getCost } from "../../store/modules/app/actions";
-import { getPet } from "../../store/modules/app/actions";
+import { getOwnerCost } from "../../store/modules/app/actions";
 import { AntDesign } from "@expo/vector-icons";
 import { navigate } from "./../../services/navigation";
 
@@ -21,17 +20,26 @@ import {
 
 const App = () => {
   const dispatch = useDispatch();
-  const { cost, form } = useSelector((state) => state.app);
+
+  const { ownerCost, form } = useSelector((state) => state.app);
+
   const data = [
     { quarter: 1, earnings: 13000, label: "Pet1" },
     { quarter: 2, earnings: 16500, label: "Pet2" },
     { quarter: 3, earnings: 14250, label: "Pet3" },
     { quarter: 4, earnings: 19000, label: "Pet4" }
   ];
-  console.log(cost)
+
   useEffect(() => {
-    dispatch(getCost());
+    dispatch(getOwnerCost());
   }, []);
+
+  console.log("ownercost after dispatch")
+  console.log(ownerCost);
+
+  //const mappedOwnerCost = ownerCost.map((e) => ({ quarter: e.pet_id, earnings: e.total_price, label: e.pet_name }));
+  //console.log(mappedOwnerCost);
+
   return (
     <Box background="primary" hasPadding>
         <Spacer size="10px" />
@@ -50,8 +58,8 @@ const App = () => {
           </Title>
         </Box>
         <View style={styles.container}>
-            <VictoryPie 
-              data={data} 
+            <VictoryPie
+              data={data}
               x="quarter"
               y="earnings"
             />
@@ -82,8 +90,8 @@ export default App
 //           </Title>
 //         </Box>
 //         <View style={styles.container}>
-//             <VictoryPie 
-//               data={data} 
+//             <VictoryPie
+//               data={data}
 //               x="quarter"
 //               y="earnings"
 //             />
