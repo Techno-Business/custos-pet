@@ -23,7 +23,13 @@ const ModalFeatures = ({ navigation: { goBack } }) => {
         ></TouchableOpacity>
         <View style={styles.container}>
           <View style={styles.content}>
-            <Button>{t("Dashboard")}</Button>
+            <Button 
+              onPress={() => {
+                setVisibleModal(false);
+                navigate("Dashboard");
+              }}
+            >
+              {t("Dashboard")}</Button>
             <Spacer />
             <Button onPress={() => navigate("AddPet")}>{t("Calendar")}</Button>
             <Spacer />

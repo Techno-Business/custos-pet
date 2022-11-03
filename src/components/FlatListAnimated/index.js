@@ -21,6 +21,7 @@ import {
   setForm,
 } from "./../../store/modules/app/actions";
 
+
 import { Button, Spacer } from "./../../components";
 
 const { width } = Dimensions.get("screen");
@@ -52,9 +53,33 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
           const petId = item.id;
           return (
             <View key={index} style={styles.itemContainer}>
-              <Text style={[styles.name]} numberOfLines={1}>
-                {item.name}
-              </Text>
+              <View style={styles.itemContainerRow}>
+                <Text style={[styles.name]} numberOfLines={1}>
+                  {item.name}
+                </Text>
+                {/* <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                    spacing="0 -120px 0 0"
+                    icon="close"
+                    width="20px"
+                    background="blueLight"
+                    size={12}
+                    onPress={async () => {
+                      modalRefCost?.current?.open();
+                    }}
+                  >
+                </Button>
+                <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                    spacing="0 0 0 0"
+                    background="redLight"
+                    hasPadding="0 0 0 15px"
+                    icon="close"
+                    size={12}
+                    onPress={async () => {
+                      modalRefCost?.current?.open();
+                    }}
+                  >
+                </Button> */}
+              </View>
               <View style={styles.itemContainerRow}>
                 <Text style={[styles.category]}>
                   {i18n.t(item.category)}
@@ -64,8 +89,8 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
               <Spacer size="15px" />
               <View style={styles.itemContainerRow}>
                 <Button
+                  style={styles.itemEditar}
                   width="50%"
-                  background="greenLight"
                   size={12}
                   onPress={async () => {
                     modalRefCost?.current?.open();
