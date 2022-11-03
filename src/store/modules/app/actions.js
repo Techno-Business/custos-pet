@@ -40,6 +40,10 @@ export function setEvent(payload) {
   return { type: types.SET_EVENT, payload };
 }
 
+export function getEvent() {
+  return { type: types.GET_EVENT };
+}
+
 export function saveCost() {
   return { type: types.SAVE_COST };
 }

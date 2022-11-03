@@ -26,6 +26,7 @@ import { useTranslation } from "react-i18next";
 import WixScreen from "./pages/Calendar/tes";
 import ModalFeatures from "./components/modal/features";
 import AddPet from "./pages/AddPet";
+import EventHistory from "./pages/Calendar/eventHistory";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -148,6 +149,11 @@ const Routes = () => {
             options={{ headerShown: false }}
             name="HistoryCost"
             component={HistoryCost}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="EventHistory"
+            component={EventHistory}
           />
           <Stack.Screen
             options={{ headerShown: false }}

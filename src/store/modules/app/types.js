@@ -8,6 +8,7 @@ const types = {
   SET_FORM: "@app/SET_FORM",
   SET_EVENT: "@app/SET_EVENT",
   SAVE_EVENT: "@app/SAVE_EVENT",
+  GET_EVENT: "@app/GET_EVENT",
   GET_PET: "@app/GET_PET",
   SET_COST: "@app/SET_COST",
   SAVE_COST: "@app/SAVE_COST",

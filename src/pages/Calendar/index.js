@@ -4,6 +4,7 @@ import { Modalize } from "react-native-modalize";
 import {
   setEvent as setEventAction,
   saveEvent,
+  setForm,
 } from "../../store/modules/app/actions";
 import MultiSelect from "react-native-multiple-select";
 import AddEventSchema from "../../schemas/addEvent.schema";
@@ -153,6 +154,17 @@ const Calendario = () => {
         onDayPress={onOpen}
       />
       <Button title="Abrir modal" onPress={onOpen}></Button>
+      <Button
+        width="50%"
+        background="blueLight"
+        size={12}
+        onPress={() => {
+          dispatch(setForm({ loading: true }));
+          navigate("EventHistory");
+        }}
+      >
+        History
+      </Button>
       <Modalize adjustToContentHeight ref={modalizeRef}>
         <Box hasPadding background="primary">
           <Box row align="flex-end" justify="flex-start">
