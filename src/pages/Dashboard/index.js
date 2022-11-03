@@ -19,7 +19,6 @@ import {
 } from "./../../components";
 
 
-console.log("Ola mundo cruel")
 const App = () => {
   const dispatch = useDispatch();
   const { cost, form } = useSelector((state) => state.app);

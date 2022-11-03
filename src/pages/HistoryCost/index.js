@@ -8,6 +8,7 @@ import { getCost } from "../../store/modules/app/actions";
 import {
   Box,
   Cover,
+  View,
   Spacer,
   Title,
   TextP,
@@ -85,6 +86,17 @@ const HistoryCost = () => {
                   radius
                   spacing="0 0 10px 0"
                 >
+                  <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                    spacing="0 0 0 0"
+                    background="redLight"
+                    hasPadding="0 0 0 15px"
+                    icon="close"
+                    size={12}
+                    onPress={async () => {
+                      modalRefCost?.current?.open();
+                    }}
+                  >
+                </Button>
                   <TextP
                     align="left"
                     medium
@@ -92,11 +104,11 @@ const HistoryCost = () => {
                   <TextP align="left" bold>
                     {moment(item.date).format("MMM Do YY")}
                   </TextP>
-                  <TextP align="right" color="greenLight" big bold>{`R$ ${(
-                    item.price / 100
-                  )
-                    .toFixed(2)
-                    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`}</TextP>
+                    <TextP align="right" color="greenLight" big bold>{`R$ ${(
+                      item.price / 100
+                    )
+                      .toFixed(2)
+                      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`}</TextP>
                 </Box>
               )}
             />

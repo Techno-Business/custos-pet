@@ -57,17 +57,6 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                 <Text style={[styles.name]} numberOfLines={1}>
                   {item.name}
                 </Text>
-                {/* <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
-                    spacing="0 -120px 0 0"
-                    icon="close"
-                    width="20px"
-                    background="blueLight"
-                    size={12}
-                    onPress={async () => {
-                      modalRefCost?.current?.open();
-                    }}
-                  >
-                </Button>
                 <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
                     spacing="0 0 0 0"
                     background="redLight"
@@ -78,7 +67,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                       modalRefCost?.current?.open();
                     }}
                   >
-                </Button> */}
+                </Button>
               </View>
               <View style={styles.itemContainerRow}>
                 <Text style={[styles.category]}>
@@ -118,7 +107,6 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
     </View>
   );
 };
-
 const FlatListAnimated = () => {
   const { pet } = useSelector((state) => state.app);
   const [data, setData] = React.useState(pet);
