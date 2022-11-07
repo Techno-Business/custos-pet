@@ -22,6 +22,7 @@ import {
 
 
 const App = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const { ownerCost, form } = useSelector((state) => state.app);
@@ -55,9 +56,7 @@ const App = () => {
           {("Dashboard")}
           </Title>
         </Box>
-        {/* {data && (<Title big color="tertiary" small>
-            {("No pet registered at the moment")}
-          </Title>)} */}
+
         {data.length ? (
           <View style={styles.container}>
             <VictoryPie
@@ -85,7 +84,7 @@ const App = () => {
             />
             <Spacer size="40px" />
             <Title big color="tertiary" small>
-              {("Nenhum gasto registrado até o momento!")}
+              {t("No cost registered at the moment")}
             </Title>
           </Box>
         )}
