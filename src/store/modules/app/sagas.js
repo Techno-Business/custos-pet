@@ -230,6 +230,28 @@ export function* getCost() {
   }
 }
 
+export function* getOwnerCost() {
+  const { user } = yield select((state) => state.app);
+
+  const ownerId = user.id;
+
+  yield put(setForm({ loading: true }));
+
+  try {
+    const { data: res } = yield call(api.get, `${apiV1}/owner/${ownerId}/costs/`);
+    if (res.error) {
+      yield put(reset("ownerCost"));
+      return false;
+    }
+
+    yield put(setReducer("ownerCost", res));
+  } catch (err) {
+    Alert.alert("Internal error", err.message);
+  } finally {
+    yield put(setForm({ loading: false }));
+  }
+}
+
 export default all([
   takeLatest(types.SAVE_USER, saveUser),
   takeLatest(types.LOGIN_USER, loginUser),
@@ -237,4 +259,5 @@ export default all([
   takeLatest(types.SAVE_PET, savePet),
   takeLatest(types.SAVE_COST, saveCost),
   takeLatest(types.GET_COST, getCost),
+  takeLatest(types.GET_OWNER_COST, getOwnerCost),
 ]);

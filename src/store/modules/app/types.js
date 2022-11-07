@@ -11,6 +11,7 @@ const types = {
     SAVE_COST: '@app/SAVE_COST',
     GET_COST: '@app/GET_COST',
     RESET: '@app/RESET',
+    GET_OWNER_COST: '@app/GET_OWNER_COST',
 };
 
 export default types;

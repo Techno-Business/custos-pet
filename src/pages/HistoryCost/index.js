@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { FlatList } from "react-native";
 
@@ -24,7 +24,7 @@ import illustration from "./../../assets/illustrationHistory.png";
 import { navigate } from "./../../services/navigation";
 import { useTranslation } from "react-i18next";
 const HistoryCost = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const dispatch = useDispatch();
   const { cost, form } = useSelector((state) => state.app);
 
@@ -46,7 +46,7 @@ const HistoryCost = () => {
         ></Button>
         <Title big width="auto">
           {" "}
-          {t("History cost")}
+          {i18n.t("History cost")}
         </Title>
       </Box>
       {form?.loading && (
@@ -67,7 +67,7 @@ const HistoryCost = () => {
           <Spacer size="40px" />
           <Title big color="tertiary" small>
             {" "}
-            {t("No cost registered at the moment")}
+            {i18n.t("No cost registered at the moment")}
           </Title>
         </Box>
       )}
@@ -85,18 +85,29 @@ const HistoryCost = () => {
                   radius
                   spacing="0 0 10px 0"
                 >
+                  {/* <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                    spacing="0 0 0 0"
+                    background="redLight"
+                    hasPadding="0 0 0 15px"
+                    icon="close"
+                    size={12}
+                    onPress={async () => {
+                      modalRefCost?.current?.open();
+                    }}
+                  >
+                </Button> */}
                   <TextP
                     align="left"
                     medium
-                  >{`${item.type} - ${item.goal} `}</TextP>
+                  >{`${i18n.t(item.type)} - ${item.goal} `}</TextP>
                   <TextP align="left" bold>
                     {moment(item.date).format("MMM Do YY")}
                   </TextP>
-                  <TextP align="right" color="greenLight" big bold>{`R$ ${(
-                    item.price / 100
-                  )
-                    .toFixed(2)
-                    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`}</TextP>
+                    <TextP align="right" color="greenLight" big bold>{`R$ ${(
+                      item.price / 100
+                    )
+                      .toFixed(2)
+                      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`}</TextP>
                 </Box>
               )}
             />
@@ -109,7 +120,7 @@ const HistoryCost = () => {
             height="100px"
           >
             <TextP align="left" medium bold>
-              {t("COST TOTAL:")}
+              {i18n.t("COST TOTAL:")}
             </TextP>
             <TextP align="right" color="greenLight" big bold>
               {`R$ ${(cost?.costTotal / 100)

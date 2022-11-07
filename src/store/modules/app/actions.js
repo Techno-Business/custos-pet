@@ -43,6 +43,10 @@ export function saveCost() {
 export function getCost() {
   return { type: types.GET_COST };
 }
+
+export function getOwnerCost() {
+  return { type: types.GET_OWNER_COST };
+}
   
 export function reset(key) {
   return { type: types.RESET, key };

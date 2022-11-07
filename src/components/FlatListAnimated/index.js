@@ -58,17 +58,6 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                   {item.name}
                 </Text>
                 {/* <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
-                    spacing="0 -120px 0 0"
-                    icon="close"
-                    width="20px"
-                    background="blueLight"
-                    size={12}
-                    onPress={async () => {
-                      modalRefCost?.current?.open();
-                    }}
-                  >
-                </Button>
-                <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
                     spacing="0 0 0 0"
                     background="redLight"
                     hasPadding="0 0 0 15px"
@@ -118,7 +107,6 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
     </View>
   );
 };
-
 const FlatListAnimated = () => {
   const { pet } = useSelector((state) => state.app);
   const [data, setData] = React.useState(pet);
