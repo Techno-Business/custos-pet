@@ -86,7 +86,7 @@ const HistoryCost = () => {
                   radius
                   spacing="0 0 10px 0"
                 >
-                  <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                  {/* <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
                     spacing="0 0 0 0"
                     background="redLight"
                     hasPadding="0 0 0 15px"
@@ -96,7 +96,7 @@ const HistoryCost = () => {
                       modalRefCost?.current?.open();
                     }}
                   >
-                </Button>
+                </Button> */}
                   <TextP
                     align="left"
                     medium

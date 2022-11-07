@@ -57,7 +57,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                 <Text style={[styles.name]} numberOfLines={1}>
                   {item.name}
                 </Text>
-                <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                {/* <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
                     spacing="0 0 0 0"
                     background="redLight"
                     hasPadding="0 0 0 15px"
@@ -67,7 +67,7 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                       modalRefCost?.current?.open();
                     }}
                   >
-                </Button>
+                </Button> */}
               </View>
               <View style={styles.itemContainerRow}>
                 <Text style={[styles.category]}>
