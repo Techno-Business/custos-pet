@@ -216,7 +216,7 @@ export function* getCost() {
 
   try {
     const { data: res } = yield call(api.get, `${apiV1}/owner/${ownerId}/costs/pets/${petId}`);
-    console.log(res)
+
     if (res.error) {
       yield put(reset("cost"));
       return false;

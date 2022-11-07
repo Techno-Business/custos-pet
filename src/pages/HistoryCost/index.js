@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { FlatList } from "react-native";
 
@@ -8,7 +8,6 @@ import { getCost } from "../../store/modules/app/actions";
 import {
   Box,
   Cover,
-  View,
   Spacer,
   Title,
   TextP,
@@ -25,7 +24,7 @@ import illustration from "./../../assets/illustrationHistory.png";
 import { navigate } from "./../../services/navigation";
 import { useTranslation } from "react-i18next";
 const HistoryCost = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const dispatch = useDispatch();
   const { cost, form } = useSelector((state) => state.app);
 
@@ -47,7 +46,7 @@ const HistoryCost = () => {
         ></Button>
         <Title big width="auto">
           {" "}
-          {t("History cost")}
+          {i18n.t("History cost")}
         </Title>
       </Box>
       {form?.loading && (
@@ -68,7 +67,7 @@ const HistoryCost = () => {
           <Spacer size="40px" />
           <Title big color="tertiary" small>
             {" "}
-            {t("No cost registered at the moment")}
+            {i18n.t("No cost registered at the moment")}
           </Title>
         </Box>
       )}
@@ -100,7 +99,7 @@ const HistoryCost = () => {
                   <TextP
                     align="left"
                     medium
-                  >{`${item.type} - ${item.goal} `}</TextP>
+                  >{`${i18n.t(item.type)} - ${item.goal} `}</TextP>
                   <TextP align="left" bold>
                     {moment(item.date).format("MMM Do YY")}
                   </TextP>
@@ -121,7 +120,7 @@ const HistoryCost = () => {
             height="100px"
           >
             <TextP align="left" medium bold>
-              {t("COST TOTAL:")}
+              {i18n.t("COST TOTAL:")}
             </TextP>
             <TextP align="right" color="greenLight" big bold>
               {`R$ ${(cost?.costTotal / 100)
