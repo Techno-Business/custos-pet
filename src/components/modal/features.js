@@ -26,7 +26,7 @@ const ModalFeatures = ({ navigation: { goBack } }) => {
             <Button
               onPress={() => {
                 setVisibleModal(false);
-                navigate("WixScreen");
+                navigate("Dashboard");
               }}
             >
               {t("Dashboard")}

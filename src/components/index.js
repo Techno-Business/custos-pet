@@ -110,7 +110,7 @@ export const TextInput = styled(TextInputPaper).attrs(({ theme }) => ({
   width: ${(props) => props.width || "100%"};
   margin: ${(props) => props.spacing || 0};
   font-size: ${(props) =>
-    props.big ? "12px" : props.medium ? "12px" : props.small ? "12px" : "12px"};
+    props.big ? "16px" : props.medium ? "16px" : props.small ? "16px" : "16px"};
 `;
 
 export const DropDownP = styled(DropDown).attrs(({ theme }) => ({
@@ -168,7 +168,7 @@ export const TextLink = styled.TouchableOpacity`
 export const TextLinkContent = styled.Text`
   color: ${(props) => props.theme[props.color || "brand"]};
   font-size: ${(props) =>
-    props.small ? "13px" : props.medium ? "15px" : "15px"};
+    props.small ? "15px" : props.medium ? "15px" : "15px"};
   padding: ${(props) => (props.hasPadding ? "5px" : "0px")};
   background: ${(props) =>
     props.theme[props.background] || props.background || "transparent"};

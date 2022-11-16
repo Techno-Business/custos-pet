@@ -27,6 +27,7 @@ import WixScreen from "./pages/Calendar/tes";
 import ModalFeatures from "./components/modal/features";
 import AddPet from "./pages/AddPet";
 import EventHistory from "./pages/Calendar/eventHistory";
+import Dashboard from "./pages/Dashboard";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -38,12 +39,14 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarLabelStyle: { fontSize: 12, fontWeight: "bold" },
+        tabBarLabelStyle: { fontSize: 14, fontWeight: "bold" },
         tabBarStyle: {
           backgroundColor: colors.tertiary,
-          height: 55,
+          height: 70,
           borderTopRightRadius: 20,
           borderTopLeftRadius: 20,
+          paddingBottom: 5,
+          paddingTop: 5,
         },
         tabBarInactiveTintColor: colors.primary,
         tabBarActiveTintColor: colors.brand,
@@ -55,7 +58,7 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
-            <Icon name="home" color={color} size={size} />
+            <Icon name="home" color={color} size={30} />
           ),
         }}
       />
@@ -65,7 +68,7 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: i18n.t("Features"),
           tabBarIcon: ({ color, size }) => (
-            <Icon name="google-maps" color={color} size={size} />
+            <Icon name="google-maps" color={color} size={30} />
           ),
         }}
         listeners={({ navigation }) => ({
@@ -81,7 +84,7 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: "Config",
           tabBarIcon: ({ color, size }) => (
-            <AntDesign name="setting" color={color} size={size} />
+            <AntDesign name="setting" color={color} size={30} />
           ),
         }}
       />
@@ -94,7 +97,7 @@ const TabNavigator = () => {
             display: getTabBarVisibility(route.name),
           },
           tabBarIcon: ({ color, size }) => (
-            <Icon name="logout" color={color} size={size} />
+            <Icon name="logout" color={color} size={30} />
           ),
         })}
         listeners={{
@@ -167,8 +170,8 @@ const Routes = () => {
           />
           <Stack.Screen
             options={{ headerShown: false }}
-            name="WixScreen"
-            component={WixScreen}
+            name="Dashboard"
+            component={Dashboard}
           />
           <Stack.Screen
             options={{

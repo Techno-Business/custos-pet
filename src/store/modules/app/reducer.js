@@ -11,6 +11,7 @@ const INITIAL_STATE = {
   pet: {},
   cost: {},
   event: {},
+    ownerCost: {},
   form: {
     disabled: false,
     loading: false,
