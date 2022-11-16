@@ -1,5 +1,7 @@
 import React, { createRef, useEffect, useState, useRef } from "react";
 import moment from "moment";
+import TextInputMask from "../../components/TextInputMask";
+
 import { Modalize } from "react-native-modalize";
 import {
   setEvent as setEventAction,
@@ -144,6 +146,7 @@ const Calendario = () => {
         size={30}
         onPress={() => navigate("Home")}
       ></Button>
+
       <Calendar
         minDate={Date()}
         monthFormat={"MMMM yyyy"}
@@ -153,7 +156,12 @@ const Calendario = () => {
         hideDayNames={true}
         onDayPress={onOpen}
       />
-      <Button title="Abrir modal" onPress={onOpen}></Button>
+      <Spacer size="20px" />
+      <Button width="50%" title="Abrir modal" onPress={onOpen}>
+        Add evento
+      </Button>
+      <Spacer size="30px" />
+
       <Button
         width="50%"
         background="blueLight"
@@ -163,8 +171,9 @@ const Calendario = () => {
           navigate("EventHistory");
         }}
       >
-        History
+        Histórico
       </Button>
+
       <Modalize adjustToContentHeight ref={modalizeRef}>
         <Box hasPadding background="primary">
           <Box row align="flex-end" justify="flex-start">
@@ -187,9 +196,8 @@ const Calendario = () => {
               titleInputRef.current.focus();
             }}
             label="Título"
-            placeholder="Título do evento"
             disabled={form?.loading}
-            left={<TextInput.Icon name="calendar" color="#F0560A" />}
+            left={<TextInput.Icon name="format-title" color="#F0560A" />}
             onChangeText={(title) => {
               setEvent({ title });
             }}
@@ -222,8 +230,9 @@ const Calendario = () => {
           </View>
           <Spacer />
 
-          <TextInput
+          <TextInputMask
             label="data"
+            type={"datetime"}
             options={{
               format: "DD/MM/YYYY",
             }}
@@ -233,29 +242,29 @@ const Calendario = () => {
             onChangeText={(date) => {
               setEvent({ date });
             }}
-          ></TextInput>
+          ></TextInputMask>
           <Spacer />
           <ScrollView horizontal={true} contentContainerStyle={{ flexGrow: 1 }}>
             <View style={StyleSheet.MainContainer}></View>
           </ScrollView>
           <Box row>
             <TextInput
+              ref={streetInputRef}
               label="Rua"
               width="50%"
               spacing="0 4px 0 0"
-              placeholder="Pedigree"
-              left={<TextInput.Icon name="paw" color="#F0560A" />}
               value={eventForm?.street}
+              left={<TextInput.Icon name="map" color="#F0560A" />}
               onChangeText={(street) => {
                 setEvent({ street });
               }}
             ></TextInput>
             <TextInput
+              ref={numberInputRef}
               label="Número"
               width="50%"
               spacing="0 0 0 4px"
-              placeholder="4,2"
-              left={<TextInput.Icon name="weight" color="#F0560A" />}
+              left={<TextInput.Icon name="home-floor-0" color="#F0560A" />}
               value={eventForm?.number}
               onChangeText={(number) => {
                 setEvent({ number });
@@ -264,9 +273,9 @@ const Calendario = () => {
           </Box>
           <Spacer />
           <TextInput
+            ref={postalCodeInputRef}
             label="CEP"
-            placeholder="CEP"
-            left={<TextInput.Icon name="flag-checkered" color="#F0560A" />}
+            left={<TextInput.Icon name="home-city" color="#F0560A" />}
             value={eventForm?.postal_code}
             onChangeText={(postal_code) => {
               setEvent({ postal_code });
@@ -274,9 +283,9 @@ const Calendario = () => {
           ></TextInput>
           <Spacer />
           <TextInput
+            ref={neighbourhoodInputRef}
             label="Bairro"
-            placeholder="Bairro"
-            left={<TextInput.Icon name="flag-checkered" color="#F0560A" />}
+            left={<TextInput.Icon name="map-marker-outline" color="#F0560A" />}
             value={eventForm?.neighbourhood}
             onChangeText={(neighbourhood) => {
               setEvent({ neighbourhood });
