@@ -21,6 +21,9 @@ import { colors } from "./../../assets/theme.json";
 
 import illustration from "./../../assets/illustrationHistory.png";
 
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';//
+import AsyncStorage from '@react-native-async-storage/async-storage';//
+
 import { navigate } from "./../../services/navigation";
 import { useTranslation } from "react-i18next";
 const HistoryCost = () => {
@@ -85,17 +88,29 @@ const HistoryCost = () => {
                   radius
                   spacing="0 0 10px 0"
                 >
-                  {/* <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                  {<Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                    spacing="0 0 0 0"
+                    background="blueLight"
+                    hasPadding="0 0 0 15px"
+                    //icon="edit"
+                    size={12}
+                    onPress={async () => { 
+                      modalRefCost?.current?.open();
+                    }}
+                  >
+                    <Icon name="home" color={color} size={30} />
+                </Button>}
+                  {<Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
                     spacing="0 0 0 0"
                     background="redLight"
                     hasPadding="0 0 0 15px"
                     icon="close"
                     size={12}
                     onPress={async () => {
-                      modalRefCost?.current?.open();
+                      costDeletePress();
                     }}
                   >
-                </Button> */}
+                </Button>}
                   <TextP
                     align="left"
                     medium
@@ -133,5 +148,32 @@ const HistoryCost = () => {
     </Box>
   );
 };
+
+function costDeletePress(){
+  Alert.alert(
+      "Atenção",
+      "Você tem certeza que deseja excluir este custo?",
+      [
+          {
+          text: "Não",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+          },
+          { text: "Sim", onPress: () => { /*console.log(`${props.id} deleted`)*/
+                deleteCost(props.id)
+                .then(response => props.navigation.navigate("AppList", {id: props.id}));
+         }
+        }
+      ],
+      { cancelable: false }
+      );
+}
+
+async function deleteCost(id){
+  let savedCosts = await getCosts();
+  const index = await savedCosts.findIndex(cost => cost.id === id);
+  savedCosts.splice(index, 1);
+  return AsyncStorage.setCost('costs', JSON.stringify(savedCosts));
+}
 
 export default HistoryCost;

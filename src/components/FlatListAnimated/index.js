@@ -21,7 +21,6 @@ import {
   setForm,
 } from "./../../store/modules/app/actions";
 
-
 import { Button, Spacer } from "./../../components";
 
 const { width } = Dimensions.get("screen");
@@ -31,6 +30,10 @@ import util from "../../util";
 import { modalRef as modalRefCost } from "./../modal/addCost";
 
 import { navigate } from "../../services/navigation";
+
+import { Alert } from 'react-native';//
+import AsyncStorage from '@react-native-async-storage/async-storage';//
+import { Feather as Icon } from '@expo/vector-icons';//
 
 const OVERFLOW_HEIGHT = 70;
 const SPACING = 5;
@@ -57,17 +60,28 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                 <Text style={[styles.name]} numberOfLines={1}>
                   {item.name}
                 </Text>
-                {/* <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                {<Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                    spacing="0 0 0 0"
+                    background="blueLight"
+                    hasPadding="0 0 0 15px"
+                    //icon="edit"
+                    size={12}
+                    onPress={async () => {
+                      EditPet?.current?.open();
+                    }}
+                  >
+                </Button>}
+                { <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
                     spacing="0 0 0 0"
                     background="redLight"
                     hasPadding="0 0 0 15px"
                     icon="close"
                     size={12}
                     onPress={async () => {
-                      modalRefCost?.current?.open();
+                      petDeletePress();
                     }}
                   >
-                </Button> */}
+                </Button> }
               </View>
               <View style={styles.itemContainerRow}>
                 <Text style={[styles.category]}>
@@ -257,5 +271,32 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
 });
+
+function petDeletePress(){
+  Alert.alert(
+      "Atenção",
+      "Você tem certeza que deseja excluir este pet?",
+      [
+          {
+          text: "Não",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+          },
+          { text: "Sim", onPress: () => { /*console.log(`${props.id} deleted`)*/
+                deletePet(props.id)
+                .then(response => props.navigation.navigate("AppList", {id: props.id}));
+         }
+        }
+      ],
+      { cancelable: false }
+      );
+}
+
+async function deletePet(id){
+  let savedPets = await getPets();
+  const index = await savedPets.findIndex(pet => pet.id === id);
+  savedPets.splice(index, 1);
+  return AsyncStorage.setPet('pets', JSON.stringify(savedPets));
+}
 
 export default FlatListAnimated;
