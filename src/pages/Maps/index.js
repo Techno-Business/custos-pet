@@ -17,7 +17,7 @@ import {
 } from "./../../components";
 
 let baseMapsAPIURL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json`;
-let apiKey = REACT_APP_GOOGLE_MAPS_API_KEY;
+let apiKey = "AIzaSyBBjOL-Nu0fLZvjD607cXtjSftdVRdMH60";
 
 const Maps = () => {
   const { t, i18n } = useTranslation();

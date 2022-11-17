@@ -59,7 +59,7 @@ export function getCost() {
 export function getOwnerCost() {
   return { type: types.GET_OWNER_COST };
 }
-  
+
 export function reset(key) {
   return { type: types.RESET, key };
 }

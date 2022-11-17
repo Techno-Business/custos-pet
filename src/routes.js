@@ -21,14 +21,13 @@ import AddPetScreen from "./pages/AddPet";
 import HistoryCost from "./pages/HistoryCost";
 import MapsScreen from "./pages/Maps";
 import ConfigScreen from "./pages/Config";
-import CalendarScreen from "./pages/Calendar";
 import { useTranslation } from "react-i18next";
-import WixScreen from "./pages/Calendar/tes";
+
 import ModalFeatures from "./components/modal/features";
 import AddPet from "./pages/AddPet";
 import EventHistory from "./pages/Calendar/eventHistory";
 import Dashboard from "./pages/Dashboard";
-
+import CalendarScreen from "./pages/Calendar";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const TabNavigator = () => {
@@ -142,6 +141,16 @@ const Routes = () => {
             options={{ headerShown: false }}
             name="Signup"
             component={SignupScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="EventHistory"
+            component={EventHistory}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="CalendarScreen"
+            component={CalendarScreen}
           />
           <Stack.Screen
             options={{ headerShown: false }}

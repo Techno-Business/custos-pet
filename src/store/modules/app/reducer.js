@@ -4,14 +4,12 @@ import produce from "immer";
 
 const INITIAL_STATE = {
   userForm: {},
-  petForm: { sex: "Male" },
+  petForm: { sex: "Male", category: "Dog" },
   costForm: { type: "Service" },
-  eventForm: {},
   user: {},
   pet: {},
   cost: {},
-  event: {},
-    ownerCost: {},
+  ownerCost: {},
   form: {
     disabled: false,
     loading: false,
@@ -42,12 +40,6 @@ function app(state = INITIAL_STATE, action) {
     case types.SET_COST: {
       return produce(state, (draft) => {
         draft.costForm = { ...state.costForm, ...action.payload };
-      });
-    }
-
-    case types.SET_EVENT: {
-      return produce(state, (draft) => {
-        draft.eventForm = { ...state.eventForm, ...action.payload };
       });
     }
 
