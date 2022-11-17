@@ -32,15 +32,7 @@ const ModalFeatures = ({ navigation: { goBack } }) => {
               {t("Dashboard")}
             </Button>
             <Spacer />
-            <Button
-              onPress={() => {
-                setVisibleModal(false);
-
-                navigate("CalendarScreen");
-              }}
-            >
-              {t("Calendar")}
-            </Button>
+            <Button onPress={() => navigate("AddPet")}>{t("Calendar")}</Button>
             <Spacer />
             <Button
               onPress={() => {

@@ -22,9 +22,10 @@ import HistoryCost from "./pages/HistoryCost";
 import MapsScreen from "./pages/Maps";
 import ConfigScreen from "./pages/Config";
 import { useTranslation } from "react-i18next";
-import EventHistory from "./pages/Calendar/eventHistory";
+
 import ModalFeatures from "./components/modal/features";
 import AddPet from "./pages/AddPet";
+import EventHistory from "./pages/Calendar/eventHistory";
 import Dashboard from "./pages/Dashboard";
 import CalendarScreen from "./pages/Calendar";
 const Tab = createBottomTabNavigator();
@@ -163,8 +164,18 @@ const Routes = () => {
           />
           <Stack.Screen
             options={{ headerShown: false }}
+            name="EventHistory"
+            component={EventHistory}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
             name="MapsScreen"
             component={MapsScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="CalendarScreen"
+            component={CalendarScreen}
           />
           <Stack.Screen
             options={{ headerShown: false }}
