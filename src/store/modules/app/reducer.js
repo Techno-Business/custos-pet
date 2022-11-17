@@ -1,20 +1,22 @@
-import types from './types';
+import types from "./types";
 
-import produce from 'immer';
+import produce from "immer";
 
 const INITIAL_STATE = {
-    userForm: {},
-    petForm: {sex: 'Male', category: 'Dog'},
-    costForm: {type: 'Service'},
-    user: {},
-    pet: {},
-    cost: {},
-    ownerCost: {},
-    form: {
-        disabled: false,
-        loading: false,
-        saving: false,
-    },  
+  userForm: {},
+  petForm: { sex: "Male", category: "Dog" },
+  costForm: { type: "Service" },
+  eventForm: {},
+  user: {},
+  pet: {},
+  cost: {},
+  event: {},
+  ownerCost: {},
+  form: {
+    disabled: false,
+    loading: false,
+    saving: false,
+  },
 };
 
 function app(state = INITIAL_STATE, action) {
@@ -24,7 +26,7 @@ function app(state = INITIAL_STATE, action) {
         draft[action.key] = action.payload;
       });
     }
-    
+
     case types.SET_USER: {
       return produce(state, (draft) => {
         draft.userForm = { ...state.userForm, ...action.payload };
@@ -43,12 +45,18 @@ function app(state = INITIAL_STATE, action) {
       });
     }
 
+    case types.SET_EVENT: {
+      return produce(state, (draft) => {
+        draft.eventForm = { ...state.eventForm, ...action.payload };
+      });
+    }
+
     case types.SET_FORM: {
       return produce(state, (draft) => {
         draft.form = { ...state.form, ...action.payload };
       });
     }
-    
+
     case types.RESET: {
       return produce(state, (draft) => {
         draft[action.key] = INITIAL_STATE[action.key];

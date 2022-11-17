@@ -13,7 +13,7 @@ import util from "../../../util";
 import moment from "moment";
 
 import { modalRef as modalRefCost } from "../../../components/modal/addCost";
-
+import { modalizeRef as modalizeRefEvent } from "../../../pages/Calendar";
 import { replace } from "../../../services/navigation";
 
 const apiV1 = "api/v1";
@@ -67,6 +67,7 @@ export function* loginUser() {
     yield put(reset("userForm"));
     yield put(reset("petForm"));
     yield put(reset("costForm"));
+    yield put(reset("eventForm"));
     yield call(replace, "Home");
   } catch (err) {
     yield call(Alert.alert, "Internal error", err.message);
@@ -174,7 +175,11 @@ export function* saveCost() {
 
     const ownerId = user?.id;
 
-    const { data: res } = yield call(api.post, `${apiV1}/owner/${ownerId}/costs`, objectCost);
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/${ownerId}/costs`,
+      objectCost
+    );
 
     if (res.error) {
       Alert.alert("Ops!", res.message, [
@@ -206,6 +211,61 @@ export function* saveCost() {
   }
 }
 
+export function* saveEvent() {
+  const { eventForm, user } = yield select((state) => state.app);
+
+  yield put(setForm({ saving: true }));
+
+  try {
+    const objectEvent = {};
+    objectEvent.petId = eventForm?.petId;
+    objectEvent.title = eventForm?.title;
+    objectEvent.date = moment(eventForm?.date, "DD/MM/YYYY").format(
+      "YYYY-MM-DD"
+    );
+    objectEvent.street = eventForm?.street;
+    objectEvent.number = eventForm?.number;
+    objectEvent.postal_code = eventForm?.postal_code;
+    objectEvent.neighbourhood = eventForm?.neighbourhood;
+
+    const ownerId = user?.id;
+
+    const { data: res } = yield call(
+      api.post,
+      `${apiV1}/owner/${ownerId}/diaries`,
+      objectEvent
+    );
+
+    if (res.error) {
+      Alert.alert("Ops!", res.message, [
+        {
+          text: "Try again",
+          onPress: () => {},
+        },
+      ]);
+      return false;
+    }
+
+    yield put(reset("eventForm"));
+    yield call(modalizeRefEvent?.current?.close);
+
+    Alert.alert(
+      "Event added successfully!",
+      "You can consult the Event history now",
+      [
+        {
+          text: "Back to home",
+          onPress: async () => {},
+        },
+      ]
+    );
+  } catch (err) {
+    Alert.alert("Internal error", err.message);
+  } finally {
+    yield put(setForm({ saving: false }));
+  }
+}
+
 export function* getCost() {
   const { costForm, user } = yield select((state) => state.app);
 
@@ -215,7 +275,10 @@ export function* getCost() {
   yield put(setForm({ loading: true }));
 
   try {
-    const { data: res } = yield call(api.get, `${apiV1}/owner/${ownerId}/costs/pets/${petId}`);
+    const { data: res } = yield call(
+      api.get,
+      `${apiV1}/owner/${ownerId}/costs/pets/${petId}`
+    );
 
     if (res.error) {
       yield put(reset("cost"));
@@ -223,6 +286,33 @@ export function* getCost() {
     }
 
     yield put(setReducer("cost", res));
+  } catch (err) {
+    Alert.alert("Internal error", err.message);
+  } finally {
+    yield put(setForm({ loading: false }));
+  }
+}
+
+export function* getEvent() {
+  const { eventForm, user } = yield select((state) => state.app);
+
+  const ownerId = user.id;
+  //const petId = costForm.petId;
+
+  yield put(setForm({ loading: true }));
+
+  try {
+    const { data: res } = yield call(
+      api.get,
+      `${apiV1}/owner/${ownerId}/diaries`
+    );
+
+    if (res.error) {
+      yield put(reset("event"));
+      return false;
+    }
+
+    yield put(setReducer("event", res));
   } catch (err) {
     Alert.alert("Internal error", err.message);
   } finally {
@@ -238,7 +328,10 @@ export function* getOwnerCost() {
   yield put(setForm({ loading: true }));
 
   try {
-    const { data: res } = yield call(api.get, `${apiV1}/owner/${ownerId}/costs/`);
+    const { data: res } = yield call(
+      api.get,
+      `${apiV1}/owner/${ownerId}/costs/`
+    );
     if (res.error) {
       yield put(reset("ownerCost"));
       return false;
@@ -260,4 +353,6 @@ export default all([
   takeLatest(types.SAVE_COST, saveCost),
   takeLatest(types.GET_COST, getCost),
   takeLatest(types.GET_OWNER_COST, getOwnerCost),
+  takeLatest(types.GET_EVENT, getEvent),
+  takeLatest(types.SAVE_EVENT, saveEvent),
 ]);
