@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 
-import { FlatList } from "react-native";
+import { 
+  FlatList, 
+  StyleSheet,//
+  Text,//
+  View,//
+  Alert,//
+} from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getCost } from "../../store/modules/app/actions";
@@ -13,7 +19,7 @@ import {
   TextP,
   Button,
   ActivityIndicator,
-} from "./../../components";
+  } from "./../../components";
 
 import util from "../../util";
 import moment from "moment";
@@ -21,8 +27,8 @@ import { colors } from "./../../assets/theme.json";
 
 import illustration from "./../../assets/illustrationHistory.png";
 
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';//
 import AsyncStorage from '@react-native-async-storage/async-storage';//
+import { Feather as Icon } from '@expo/vector-icons';//
 
 import { navigate } from "./../../services/navigation";
 import { useTranslation } from "react-i18next";
@@ -91,25 +97,20 @@ const HistoryCost = () => {
                   {<Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
                     spacing="0 0 0 0"
                     background="blueLight"
-                    hasPadding="0 0 0 15px"
-                    //icon="edit"
-                    size={12}
+                    hasPadding="0 0 0 0"
                     onPress={async () => { 
                       modalRefCost?.current?.open();
-                    }}
-                  >
-                    <Icon name="home" color={color} size={30} />
-                </Button>}
+                    }} >
+                    <Icon name="edit" size={12.5} />  
+                  </Button>}
                   {<Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
                     spacing="0 0 0 0"
                     background="redLight"
-                    hasPadding="0 0 0 15px"
-                    icon="close"
-                    size={12}
+                    hasPadding="0 0 0 0"
                     onPress={async () => {
                       costDeletePress();
-                    }}
-                  >
+                    }}>
+                  <Icon name="trash" size={12.5} /> 
                 </Button>}
                   <TextP
                     align="left"
@@ -160,8 +161,8 @@ function costDeletePress(){
           style: "cancel"
           },
           { text: "Sim", onPress: () => { /*console.log(`${props.id} deleted`)*/
-                deleteCost(props.id)
-                .then(response => props.navigation.navigate("AppList", {id: props.id}));
+              deleteCost(props.id)
+              .then(response => props.navigation.navigate("HistoryCost", {id: props.id}));
          }
         }
       ],
@@ -170,10 +171,10 @@ function costDeletePress(){
 }
 
 async function deleteCost(id){
-  let savedCosts = await getCosts();
-  const index = await savedCosts.findIndex(cost => cost.id === id);
-  savedCosts.splice(index, 1);
-  return AsyncStorage.setCost('costs', JSON.stringify(savedCosts));
+  let saveCost = await getCost();
+  const index = await saveCost.findIndex(cost => cost.id === id);
+  saveCost.splice(index, 1);
+  return AsyncStorage.setCost('cost', JSON.stringify(saveCost));
 }
 
 export default HistoryCost;
