@@ -8,6 +8,7 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
+  Alert,//
 } from "react-native";
 import {
   FlingGestureHandler,
@@ -31,7 +32,6 @@ import { modalRef as modalRefCost } from "./../modal/addCost";
 
 import { navigate } from "../../services/navigation";
 
-import { Alert } from 'react-native';//
 import AsyncStorage from '@react-native-async-storage/async-storage';//
 import { Feather as Icon } from '@expo/vector-icons';//
 
@@ -60,27 +60,23 @@ const OverflowItems = ({ data, scrollXAnimated }) => {
                 <Text style={[styles.name]} numberOfLines={1}>
                   {item.name}
                 </Text>
-                {<Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
-                    spacing="0 0 0 0"
+                {<Button style={{height: 30, width: 0, alignSelf: 'flex-end'}}
+                    spacing="0 0 0 60px"
                     background="blueLight"
-                    hasPadding="0 0 0 15px"
-                    //icon="edit"
-                    size={12}
+                    hasPadding="0 0 0 0"
                     onPress={async () => {
-                      EditPet?.current?.open();
-                    }}
-                  >
+                    navigation.navigate("EditPet", {Codigo: Codigo.Codigo});
+                    }} > 
+                    <Icon name="edit" size={12.5} />
                 </Button>}
-                { <Button style={{height: 30, width:0, alignSelf: 'flex-end'}}
+                { <Button style={{height: 30, width: 0, alignSelf: 'flex-end'}}
                     spacing="0 0 0 0"
                     background="redLight"
-                    hasPadding="0 0 0 15px"
-                    icon="close"
-                    size={12}
+                    hasPadding="0 0 0 0"
                     onPress={async () => {
                       petDeletePress();
-                    }}
-                  >
+                    }} >
+                    <Icon name="trash" size={12.5} />  
                 </Button> }
               </View>
               <View style={styles.itemContainerRow}>
@@ -284,7 +280,7 @@ function petDeletePress(){
           },
           { text: "Sim", onPress: () => { /*console.log(`${props.id} deleted`)*/
                 deletePet(props.id)
-                .then(response => props.navigation.navigate("AppList", {id: props.id}));
+                .then(response => props.navigation.navigate("FlatListAnimated", {id: props.id}));
          }
         }
       ],
@@ -293,10 +289,10 @@ function petDeletePress(){
 }
 
 async function deletePet(id){
-  let savedPets = await getPets();
-  const index = await savedPets.findIndex(pet => pet.id === id);
-  savedPets.splice(index, 1);
-  return AsyncStorage.setPet('pets', JSON.stringify(savedPets));
+  let savePet = await getPet();
+  const index = await savePet.findIndex(pet => pet.id === id);
+  savePet.splice(index, 1);
+  return AsyncStorage.setPet('pet', JSON.stringify(savePet));
 }
 
 export default FlatListAnimated;
